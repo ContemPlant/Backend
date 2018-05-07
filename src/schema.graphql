@@ -1,0 +1,24 @@
+# import Plant from "./generated/prisma.graphql"
+
+type Query {
+    info: String!
+    plants: [Plant!]!
+}
+
+type AuthPayload {
+    token: String
+    user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  plants: [Plant!]!
+}
+
+type Mutation {
+    signup(email: String!, password: String!, name: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
+    createPlant(temperature_opt: Float!, temperature_weight: Float!): Plant!
+}

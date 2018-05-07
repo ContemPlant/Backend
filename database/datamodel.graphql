@@ -1,0 +1,21 @@
+type User {
+    id: ID! @unique
+    name: String!
+    email: String! @unique
+    password: String!
+    plants: [Plant!]!
+}
+
+type Plant {
+    id: ID! @unique
+    temperature_opt: Float!
+    temperature_weight: Float!
+    owner: User!
+}
+
+type SensorTemperature {
+    id: ID! @unique
+    plant: Plant!    
+    createdAt: DateTime!
+    value: Float!
+}
