@@ -12,7 +12,6 @@ type AuthPayload {
 
 type User {
   id: ID!
-  name: String!
   email: String!
   plants: [Plant!]!
 }
