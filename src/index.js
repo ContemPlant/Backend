@@ -18,7 +18,7 @@ const server = new GraphQLServer({
         ...req, 
         db: new Prisma({
             typeDefs: 'src/generated/prisma.graphql',
-            endpoint: 'http://localhost:4466/hn-node/dev',
+            endpoint: 'http://167.99.240.197:4466/plantsdb/dev',
             secret: 'tobias',
             debug: true,
         }),
