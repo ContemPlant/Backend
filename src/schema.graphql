@@ -17,7 +17,7 @@ type User {
 }
 
 type Mutation {
-    signup(email: String!, password: String!, name: String!): AuthPayload
+    signup(email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
     createPlant(temperature_opt: Float!, temperature_weight: Float!): Plant!
 }

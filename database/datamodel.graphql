@@ -7,14 +7,43 @@ type User {
 
 type Plant {
     id: ID! @unique
-    temperature_opt: Float!
-    temperature_weight: Float!
+    temperature_opt: Float
+    temperature_weight: Float
+    radiation_opt: Float
+    radiation_weight: Float
+    humidity_opt: Float
+    humidity_weight: Float
+    water_opt: Float
+    water_weight: Float
     owner: User!
+    humidityData: [SensorHumidity!]!
+    temperatureData: [SensorTemperature!]!
+    radiationData: [SensorRadiation!]!
+    waterData: [SensorWater!]!
 }
 
 type SensorTemperature {
     id: ID! @unique
-    plant: Plant!    
+    plant: Plant!
     createdAt: DateTime!
     value: Float!
 }
+type SensorRadiation {
+    id: ID! @unique
+    plant: Plant!
+    createdAt: DateTime!
+    value: Float!
+}
+type SensorHumidity {
+    id: ID! @unique
+    plant: Plant!
+    createdAt: DateTime!
+    value: Float!
+}
+type SensorWater {
+    id: ID! @unique
+    plant: Plant!
+    createdAt: DateTime!
+    value: Float!
+}
+
