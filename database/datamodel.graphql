@@ -7,15 +7,20 @@ type User {
 
 type Plant {
     id: ID! @unique
+    owner: User!
+    
     temperature_opt: Float
     temperature_weight: Float
+
     radiation_opt: Float
     radiation_weight: Float
+
     humidity_opt: Float
     humidity_weight: Float
+
     water_opt: Float
     water_weight: Float
-    owner: User!
+
     humidityData: [SensorHumidity!]!
     temperatureData: [SensorTemperature!]!
     radiationData: [SensorRadiation!]!
