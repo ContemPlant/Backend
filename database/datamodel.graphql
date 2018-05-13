@@ -27,28 +27,33 @@ type Plant {
     waterData: [SensorWater!]!
 }
 
+type Ardu {
+    id: ID! @unique
+    loadedPlant: Plant
+}
+
 type SensorTemperature {
     id: ID! @unique
     plant: Plant!
-    createdAt: DateTime!
+    timeStamp: DateTime!
     value: Float!
 }
 type SensorRadiation {
     id: ID! @unique
     plant: Plant!
-    createdAt: DateTime!
+    timeStamp: DateTime!
     value: Float!
 }
 type SensorHumidity {
     id: ID! @unique
     plant: Plant!
-    createdAt: DateTime!
+    timeStamp: DateTime!
     value: Float!
 }
 type SensorWater {
     id: ID! @unique
     plant: Plant!
-    createdAt: DateTime!
+    timeStamp: DateTime!
     value: Float!
 }
 
