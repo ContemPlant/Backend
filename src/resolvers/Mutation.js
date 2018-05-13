@@ -43,17 +43,45 @@ async function login(parent, args, context, info) {
 }
 
 function createPlant(parent, args, context, info) {
-    const userId = getUserId(context)
     return context.db.mutation.createPlant({
         data: {
             ...args,
-            owner: { connect: { id: userId } }
+            owner: { connect: { id: getUserId(context) } }
         }
     }, info)
 }
 
+async function addSensorData(parent, args, context, info) {
+    // get the description of matching type
+    const sensorTypeDesc = matchType(args.type)
+    // which plant
+    const plantId = (await context.db.query.ardus({
+        where: { id: args.arduId }
+    }, `{ loadedPlant { id } }`))[0].loadedPlant.id
+    
+    return context.db.mutation[`createSensor${sensorTypeDesc}`]({
+        data: {
+            value: args.value,
+            timeStamp: args.timeStamp,
+            plant: { connect: { id: plantId } }
+        }
+    }, info)
+}
+
+const matchType = typeEnum =>
+    typeEnum == 'TEMP'
+        ? 'Temperature'
+        : typeEnum == 'RAD'
+            ? 'Radiation'
+            : typeEnum == 'HUM'
+                ? 'Humidity'
+                : typeEnum == 'WAT'
+                    ? 'Water'
+                    : null
+
 module.exports = {
     signup,
     login,
-    createPlant
+    createPlant,
+    addSensorData
 }
