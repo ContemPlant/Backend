@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 
@@ -18,11 +19,28 @@ const server = new GraphQLServer({
         ...req, 
         db: new Prisma({
             typeDefs: 'src/generated/prisma.graphql',
-            endpoint: 'http://167.99.240.197:4466/plantsdb/dev',
+            endpoint: 'http://localhost:4466/plantsdb/dev',
             secret: 'tobias',
-            debug: true,
+            debug: false,
         }),
     }),
 })
 
-server.start(() => console.log(`Server is Running on http://localhost:4000`))
+// Options for the server
+const options = {
+    port: 8000,
+    endpoint: '/graphql',
+    getEndpoint: true, //accessing via get, if required (or just for convenience)
+    subscriptions: '/subscriptions',
+    playground: '/playground', // write 'false' instead to turn off playground 
+    // https: { //encryption stuff (but bad encryption...)
+    //     cert: fs.readFileSync("/root/certificate.pem"),
+    //     key: fs.readFileSync("/root/key.pem")
+    // }
+  }
+
+  server.start(options, ({ port }) =>
+  console.log(
+    `Server started, listening on port ${port} for incoming requests.`,
+  ),
+)
