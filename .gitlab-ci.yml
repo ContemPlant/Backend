@@ -10,7 +10,7 @@ stages:
 
 test:
   stage: test
-  image: node:8-alpine
+  image: node:10-alpine
   variables:
     NODE_ENV: "development"
   services:
