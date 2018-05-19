@@ -2,6 +2,14 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
 
+
+/**
+ * Creates a new user in the Database.
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
 async function signup(parent, args, context, info) {
 
     // Hash password
@@ -20,7 +28,13 @@ async function signup(parent, args, context, info) {
         user,
     }
 }
-
+/**
+ * Logs in an existing User
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
 async function login(parent, args, context, info) {
 
     // Fetch user from db
@@ -41,7 +55,13 @@ async function login(parent, args, context, info) {
         user,
     }
 }
-
+/**
+ * Creates a plant for the logged in user (jwt auth)
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
 function createPlant(parent, args, context, info) {
     return context.db.mutation.createPlant({
         data: {
@@ -50,7 +70,13 @@ function createPlant(parent, args, context, info) {
         }
     }, info)
 }
-
+/**
+ * Adds a new sensor date for a given plant (identified by arduino id)
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
 async function addSensorData(parent, args, context, info) {
     // get the description of matching type
     const sensorTypeDesc = matchType(args.type)
@@ -67,17 +93,18 @@ async function addSensorData(parent, args, context, info) {
         }
     }, info)
 }
-
-const matchType = typeEnum =>
-    typeEnum == 'TEMP'
+/**
+ * Returns the type identifier for given enum string
+ * @param {String} enumString String corresponding to an enum
+ */
+const matchType = enumString =>
+    enumString == 'TEMP'
         ? 'Temperature'
-        : typeEnum == 'RAD'
+        : enumString == 'RAD'
             ? 'Radiation'
-            : typeEnum == 'HUM'
+            : enumString == 'HUM'
                 ? 'Humidity'
-                : typeEnum == 'WAT'
-                    ? 'Water'
-                    : null
+                : null
 
 module.exports = {
     signup,
