@@ -111,9 +111,9 @@ const matchType = enumString =>
                 : null
 
 async function loadPlantOnArdu(parent, args, context, info) {
-    const userId = await context.db.query.plant({ 
+    const userId = (await context.db.query.plant({ 
         where: { id: args.plantId } 
-    }, `{ owner { id } }`)
+    }, `{ owner { id } }`)).owner.id
 
     if (userId != getUserId(context))
         throw new Error("Client does not have permisson to load plant")
