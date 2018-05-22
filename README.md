@@ -23,14 +23,21 @@ npm install
 npm start
 ```
 
+#### Testing
+To run the test suite simply run
+```
+npm test
+```
+
+
 #### Using
 
 Two enpoints are live on http://localhost:8000
 
 | Endpoint                              | Description                                              |
 | -------------------------------- | -------------------------------------------------------- |
-| `/graphql`                         | GET/POST Requests go here        |
-| `/playground`                      | Graphical Interface for schema exploration |
+| `/graphql`                         | GET/POST requests go here        |
+| `/playground`                      | Graphical interface for schema exploration |
 
 <!-- #### Further documentation
 check out the repository and open `./doc/schema/index.html` in -->
