@@ -13,11 +13,12 @@ type AuthPayload {
 type User {
   id: ID!
   email: String!
+  username: String!
   plants: [Plant!]!
 }
 
 type Mutation {
-    signup(email: String!, password: String!): AuthPayload
+    signup(username: String!, email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
     addSensorData(type: SensorType!, value: Float!, arduId: ID!, timeStamp: DateTime!): Plant
     
