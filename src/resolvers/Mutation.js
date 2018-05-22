@@ -81,17 +81,21 @@ async function addSensorData(parent, args, context, info) {
     // get the description of matching type
     const sensorTypeDesc = matchType(args.type)
     // which plant
-    const plantId = (await context.db.query.ardus({
+    const plantId = (await context.db.query.ardu({
         where: { id: args.arduId }
-    }, `{ loadedPlant { id } }`))[0].loadedPlant.id
-    
-    return context.db.mutation[`createSensor${sensorTypeDesc}`]({
+    }, `{ loadedPlant { id } }`)).loadedPlant.id
+
+    // Add sensor data
+    await context.db.mutation[`createSensor${sensorTypeDesc}`]({
         data: {
             value: args.value,
             timeStamp: args.timeStamp,
             plant: { connect: { id: plantId } }
         }
-    }, info)
+    }, null)
+
+    // Return the plant
+    return context.db.query.plant({ where: { id: plantId } }, info)
 }
 /**
  * Returns the type identifier for given enum string
