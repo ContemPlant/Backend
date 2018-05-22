@@ -9,6 +9,7 @@ type User {
 type Plant {
     id: ID! @unique
     owner: User!
+    name: String!
     
     temperature_opt: Float
     temperature_weight: Float
