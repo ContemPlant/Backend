@@ -2,8 +2,8 @@
   "name": "tobias-backend",
   "version": "1.0.0",
   "repository": {
-      "type": "gitlab",
-      "url": "git@gitlab.tubit.tu-berlin.de:t-o-b-i-a-s/Backend.git"
+    "type": "gitlab",
+    "url": "git@gitlab.tubit.tu-berlin.de:t-o-b-i-a-s/Backend.git"
   },
   "main": "index.js",
   "license": "MIT",
