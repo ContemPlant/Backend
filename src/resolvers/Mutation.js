@@ -110,6 +110,13 @@ const matchType = enumString =>
                 ? 'Humidity'
                 : null
 
+/**
+ * Basically links an ardu to a plant (loading it)
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
 async function loadPlantOnArdu(parent, args, context, info) {
     const userId = (await context.db.query.plant({ 
         where: { id: args.plantId } 
