@@ -14,7 +14,7 @@ const resetStore = store => {
 }
 const db = {
     mutation: {
-        updateArdu: ({ where, data }, _) => {
+        updateArdu: async ({ where, data }, _) => {
             store.arduStore = store.arduStore.map(x =>
                 (x.id == where.id)
                     ? { ...x, ...data }
@@ -24,7 +24,7 @@ const db = {
         }
     },
     query: {
-        plant: ({ where }, _) => lodash.filter(store.plantStore, where)[0]
+        plant: async ({ where }, _) => lodash.filter(store.plantStore, where)[0]
     }
 }
 const mockLoadPlant = context => args => loadPlantOnArdu(null, args, context, null)
