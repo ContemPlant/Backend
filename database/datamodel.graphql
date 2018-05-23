@@ -30,7 +30,7 @@ type Plant {
 
 type Ardu {
     id: ID! @unique
-    loadedPlant: Plant
+    loadedPlant: Plant @unique
 }
 
 type SensorTemperature {
