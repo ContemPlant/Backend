@@ -22,7 +22,7 @@ type Mutation {
     login(email: String!, password: String!): AuthPayload
     addSensorData(type: SensorType!, value: Float!, arduId: ID!, timeStamp: DateTime!): Plant
     
-    createPlant(temperature_opt: Float!, temperature_weight: Float!,
+    createPlant(name: String!, temperature_opt: Float!, temperature_weight: Float!,
         radiation_opt: Float!, radiation_weight: Float!,
         humidity_opt: Float!, humidity_weight: Float!,
         water_opt: Float!, water_weight: Float!
