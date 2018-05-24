@@ -37,7 +37,7 @@ test('Loads plant', async () => {
 
     // Setup store
     store.plantStore.push({ id: 'plant1', owner: { id: 'user1' } })
-    store.arduStore.push({ id: 'ardu1', loadedPlant: null })
+    store.arduStore.push({ arduId: 'ardu1', loadedPlant: null })
 
     const token = jwt.sign({ userId: 'user1' }, APP_SECRET)
 

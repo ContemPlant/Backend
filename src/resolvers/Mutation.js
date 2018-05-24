@@ -126,7 +126,7 @@ async function loadPlantOnArdu(parent, args, context, info) {
         throw new Error("Client does not have permisson to load plant")
 
     return context.db.mutation.updateArdu({
-        where: { id: args.arduId, },
+        where: { arduId: args.arduId, },
         data: { loadedPlant: { connect: { id: args.plantId } } }
     }, info)
 }
