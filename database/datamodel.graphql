@@ -29,7 +29,7 @@ type Plant {
 }
 
 type Ardu {
-    id: ID! @unique
+    arduId: String! @unique
     loadedPlant: Plant
 }
 
