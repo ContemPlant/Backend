@@ -108,7 +108,9 @@ const matchType = enumString =>
             ? 'Radiation'
             : enumString == 'HUM'
                 ? 'Humidity'
-                : null
+                : enumString == 'LOUD'
+                    ? 'Loudness'
+                    : null
 
 module.exports = {
     signup,
