@@ -30,8 +30,8 @@ type Plant {
 }
 
 type Ardu {
-    id: ID! @unique
-    loadedPlant: Plant @unique
+    arduId: String! @unique
+    loadedPlant: Plant
 }
 
 type SensorTemperature {
@@ -58,4 +58,3 @@ type SensorLoudness {
     timeStamp: DateTime!
     value: Float!
 }
-
