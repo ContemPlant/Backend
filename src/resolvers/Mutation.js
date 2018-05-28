@@ -112,9 +112,32 @@ const matchType = enumString =>
                     ? 'Loudness'
                     : null
 
+/**
+ * Basically links an ardu to a plant (loading it)
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
+async function loadPlantOnArdu(parent, args, context, info) {
+    const userId = (await context.db.query.plant({ 
+        where: { id: args.plantId } 
+    }, `{ owner { id } }`)).owner.id
+
+    if (userId != getUserId(context))
+        throw new Error("Client does not have permisson to load plant")
+
+    return context.db.mutation.updateArdu({
+        where: { arduId: args.arduId, },
+        data: { loadedPlant: { connect: { id: args.plantId } } }
+    }, info)
+}
+
+
 module.exports = {
     signup,
     login,
     createPlant,
-    addSensorData
+    addSensorData,
+    loadPlantOnArdu
 }

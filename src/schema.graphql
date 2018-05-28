@@ -1,8 +1,10 @@
 # import Plant from "./generated/prisma.graphql"
+# import Ardu from "./generated/prisma.graphql"
 
 type Query {
     info: String!
     plants: [Plant!]!
+    plant: Plant!
 }
 
 type AuthPayload {
@@ -27,6 +29,8 @@ type Mutation {
         humidity_opt: Float!, humidity_weight: Float!,
         loudness_opt: Float!, loudness_weight: Float!
     ): Plant
+
+    loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
 }
 
 enum SensorType{
