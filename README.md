@@ -34,10 +34,11 @@ npm test
 
 Two enpoints are live on http://localhost:8000
 
-| Endpoint                              | Description                                              |
-| -------------------------------- | -------------------------------------------------------- |
-| `/graphql`                         | GET/POST requests go here        |
-| `/playground`                      | Graphical interface for schema exploration |
+| Endpoint         | Description                                         |
+| ---------------- | --------------------------------------------------- |
+| `/graphql`       | GET/POST requests go here                           |
+| `/playground`    | Graphical interface for schema exploration          |
+| `/subscriptions` | Making subscriptions (also via websockets protcoll) |
 
 <!-- #### Further documentation
 check out the repository and open `./doc/schema/index.html` in -->
