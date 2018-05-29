@@ -1,5 +1,4 @@
-# import Plant from "./generated/prisma.graphql"
-# import Ardu from "./generated/prisma.graphql"
+# import Plant, Ardu, ArduSubscriptionPayload from "./generated/prisma.graphql"
 
 type Query {
     info: String!
@@ -33,9 +32,13 @@ type Mutation {
     loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
 }
 
-enum SensorType{
+enum SensorType {
     TEMP
     RAD
     HUM
     LOUD
+}
+
+type Subscription {
+    plantLoaded: ArduSubscriptionPayload
 }
