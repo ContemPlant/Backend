@@ -26,7 +26,7 @@ const db = {
 
 test('adds sensor dates', async () => {
     // Setup db
-    store.ardus.push({ id: 'ardu1', loadedPlant: { id: 'plant1' } })
+    store.ardus.push({ arduId: 'ardu1', loadedPlant: { id: 'plant1' } })
     store.plants.push({ id: 'plant1' })
 
     // for every type of sensor
