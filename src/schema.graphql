@@ -40,5 +40,5 @@ enum SensorType {
 }
 
 type Subscription {
-    plantLoaded: ArduSubscriptionPayload
+    arduChange: ArduSubscriptionPayload
 }

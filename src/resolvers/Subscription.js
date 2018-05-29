@@ -1,14 +1,14 @@
-function plantLoadedSubscribe(parent, args, context, info) {
+function arduSubscribe(parent, args, context, info) {
     return context.db.subscription.ardu(
-        { where: { mutation_in: ['UPDATED'] } },
+        { where: args.where },
         info,
     )
 }
 
-const plantLoaded = {
-    subscribe: plantLoadedSubscribe
+const arduChange = {
+    subscribe: arduSubscribe
 }
 
 module.exports = {
-    plantLoaded,
+    arduChange,
 }
