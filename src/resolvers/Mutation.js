@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
+const { APP_SECRET, getUserId, matchType } = require('../utils')
 
 
 /**
@@ -97,20 +97,6 @@ async function addSensorData(parent, args, context, info) {
     // Return the plant
     return context.db.query.plant({ where: { id: plantId } }, info)
 }
-/**
- * Returns the type identifier for given enum string
- * @param {String} enumString String corresponding to an enum
- */
-const matchType = enumString =>
-    enumString == 'TEMP'
-        ? 'Temperature'
-        : enumString == 'RAD'
-            ? 'Radiation'
-            : enumString == 'HUM'
-                ? 'Humidity'
-                : enumString == 'LOUD'
-                    ? 'Loudness'
-                    : null
 
 /**
  * Basically links an ardu to a plant (loading it)

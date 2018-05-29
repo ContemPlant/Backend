@@ -12,7 +12,23 @@ function getUserId(context) {
     throw new Error('Not authenticated')
 }
 
+/**
+ * Returns the type identifier for given enum string
+ * @param {String} enumString String corresponding to an enum
+ */
+const matchType = enumString =>
+    enumString == 'TEMP'
+        ? 'Temperature'
+        : enumString == 'RAD'
+            ? 'Radiation'
+            : enumString == 'HUM'
+                ? 'Humidity'
+                : enumString == 'LOUD'
+                    ? 'Loudness'
+                    : null
+
 module.exports = {
     APP_SECRET,
     getUserId,
+    matchType
 }
