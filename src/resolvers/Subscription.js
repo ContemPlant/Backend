@@ -1,12 +1,15 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
+const { APP_SECRET, getUserId, matchType } = require('../utils')
 
-function temperature_data(parent, args, context, info) {
-    return context.db.subscription.sensorTemperature(
-        { where: { mutation_in: ['CREATED'] } },
+async function *sensorsData(parent, args, context, info) {
+
+    const sensorData = await context.db.subscription['sensor' + matchType(args.type)](
+        { where: args.where, plant: { id: args.plantId } },
         info,
     )
+
+    console.log(sensorData)
 }
 
 function arduSubscribe(parent, args, context, info) {
@@ -16,9 +19,8 @@ function arduSubscribe(parent, args, context, info) {
     )
 }
 
-
-const newTempData = {
-    subscribe: temperature_data
+const newSensorData = {
+    subscribe: sensorsData
 }
 
 const arduChange = {
@@ -26,6 +28,6 @@ const arduChange = {
 }
 
 module.exports = {
-    newTempData,
+    newSensorData,
     arduChange
 }

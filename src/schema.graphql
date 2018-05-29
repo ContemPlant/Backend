@@ -39,7 +39,13 @@ enum SensorType{
     LOUD
 }
 
+type SensorSubscriptionPayload {
+    value: Float!
+    type: SensorType!
+    timeStamp: DateTime!
+}
+
 type Subscription {
     arduChange: ArduSubscriptionPayload
-    newTempData: SensorTemperatureSubscriptionPayload
+    newSensorData(plantId: ID!, type: SensorType!): SensorSubscriptionPayload
 }
