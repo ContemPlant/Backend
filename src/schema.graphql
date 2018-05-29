@@ -21,7 +21,7 @@ type User {
 type Mutation {
     signup(username: String!, email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
-    addSensorData(type: SensorType!, value: Float!, arduId: ID!, timeStamp: DateTime!): Plant
+    addSensorData(type: SensorType!, value: Float!, arduId: String!, timeStamp: DateTime!): Plant
     
     createPlant(name: String!, temperature_opt: Float!, temperature_weight: Float!,
         radiation_opt: Float!, radiation_weight: Float!,
@@ -32,7 +32,7 @@ type Mutation {
     loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
 }
 
-enum SensorType {
+enum SensorType{
     TEMP
     RAD
     HUM
@@ -41,4 +41,5 @@ enum SensorType {
 
 type Subscription {
     arduChange: ArduSubscriptionPayload
+    newTempData: SensorTemperatureSubscriptionPayload
 }

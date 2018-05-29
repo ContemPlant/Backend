@@ -82,7 +82,7 @@ async function addSensorData(parent, args, context, info) {
     const sensorTypeDesc = matchType(args.type)
     // which plant
     const plantId = (await context.db.query.ardu({
-        where: { id: args.arduId }
+        where: { arduId: args.arduId }
     }, `{ loadedPlant { id } }`)).loadedPlant.id
 
     // Add sensor data
