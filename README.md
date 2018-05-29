@@ -8,12 +8,14 @@ This project needs following dependencies not listed in package.json
 
 - Node version 10.x
 - Docker
-- Prisma verison 1.6.3
+- Docker-Compose
+- Prisma verison 1.8.3
 
 #### Installing
 Boot up the prisma database
 ```
-prisma local up
+cd database
+docker-compose up -d
 prisma deploy
 ```
 
