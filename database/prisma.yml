@@ -1,4 +1,8 @@
-
-
 endpoint: http://localhost:4466/plantsdb/dev
 datamodel: datamodel.graphql
+secret: tobias
+
+hooks:
+  post-deploy:
+    - graphql get-schema --project database
+    - graphql prepare

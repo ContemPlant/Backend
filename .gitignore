@@ -58,4 +58,4 @@ typings/
 .env
 
 # prisma generated
-src/generated/*
+#src/generated/*
