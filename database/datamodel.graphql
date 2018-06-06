@@ -9,6 +9,7 @@ type User {
 type Plant {
     id: ID! @unique
     owner: User!
+    name: String!
     
     temperature_opt: Float
     temperature_weight: Float
@@ -19,17 +20,17 @@ type Plant {
     humidity_opt: Float
     humidity_weight: Float
 
-    water_opt: Float
-    water_weight: Float
+    loudness_opt: Float
+    loudness_weight: Float
 
     humidityData: [SensorHumidity!]!
     temperatureData: [SensorTemperature!]!
     radiationData: [SensorRadiation!]!
-    waterData: [SensorWater!]!
+    loudnessData: [SensorLoudness!]!
 }
 
 type Ardu {
-    id: ID! @unique
+    arduId: String! @unique
     loadedPlant: Plant
 }
 
@@ -51,10 +52,9 @@ type SensorHumidity {
     timeStamp: DateTime!
     value: Float!
 }
-type SensorWater {
+type SensorLoudness {
     id: ID! @unique
     plant: Plant!
     timeStamp: DateTime!
     value: Float!
 }
-

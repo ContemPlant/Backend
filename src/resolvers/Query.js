@@ -1,5 +1,9 @@
 const { getUserId } = require('../utils')
 
+/**
+ * All query resolvers
+ * @module Query
+ */
 const info = () => `This is the API of our PlantsDb`
 
 /**

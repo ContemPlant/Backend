@@ -1,8 +1,11 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
+const { APP_SECRET, getUserId, matchType } = require('../utils')
 
-
+/**
+ * All mutation resolvers
+ * @module Mutation
+ */
 /**
  * Creates a new user in the Database.
  * @param {Object} parent Parent object from query
@@ -82,7 +85,7 @@ async function addSensorData(parent, args, context, info) {
     const sensorTypeDesc = matchType(args.type)
     // which plant
     const plantId = (await context.db.query.ardu({
-        where: { id: args.arduId }
+        where: { arduId: args.arduId }
     }, `{ loadedPlant { id } }`)).loadedPlant.id
 
     // Add sensor data
@@ -97,22 +100,33 @@ async function addSensorData(parent, args, context, info) {
     // Return the plant
     return context.db.query.plant({ where: { id: plantId } }, info)
 }
+
 /**
- * Returns the type identifier for given enum string
- * @param {String} enumString String corresponding to an enum
+ * Basically links an ardu to a plant (loading it)
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
  */
-const matchType = enumString =>
-    enumString == 'TEMP'
-        ? 'Temperature'
-        : enumString == 'RAD'
-            ? 'Radiation'
-            : enumString == 'HUM'
-                ? 'Humidity'
-                : null
+async function loadPlantOnArdu(parent, args, context, info) {
+    const userId = (await context.db.query.plant({ 
+        where: { id: args.plantId } 
+    }, `{ owner { id } }`)).owner.id
+
+    if (userId != getUserId(context))
+        throw new Error("Client does not have permisson to load plant")
+
+    return context.db.mutation.updateArdu({
+        where: { arduId: args.arduId, },
+        data: { loadedPlant: { connect: { id: args.plantId } } }
+    }, info)
+}
+
 
 module.exports = {
     signup,
     login,
     createPlant,
-    addSensorData
+    addSensorData,
+    loadPlantOnArdu
 }
