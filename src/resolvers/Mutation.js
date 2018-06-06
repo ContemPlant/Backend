@@ -2,7 +2,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId, matchType } = require('../utils')
 
-
+/**
+ * All mutation resolvers
+ * @module Mutation
+ */
 /**
  * Creates a new user in the Database.
  * @param {Object} parent Parent object from query
