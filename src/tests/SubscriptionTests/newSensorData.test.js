@@ -1,18 +1,18 @@
-const { newSensorData } = require('../../resolvers/Subscription')
+const { newSensorDates } = require('../../resolvers/Subscription')
 
 // Our DB mock
 const db = {
-    subscription: { sensorTemperature: jest.fn() }
+    subscription: { sensorDates: jest.fn() }
 }
 
 test('Calls database subscription correctly', async () => {
     const args = { plantId: 'power-plant', type: 'TEMP' }
 
-    db.subscription.sensorTemperature.mockResolvedValue(true)
+    db.subscription.sensorDates.mockResolvedValue(true)
 
-    await expect(newSensorData.subscribe(null, args, { db }, null)).resolves.toBe(true)
+    await expect(newSensorDates.subscribe(null, args, { db }, null)).resolves.toBe(true)
 
-    expect(db.subscription.sensorTemperature.mock.calls[0][0]).toEqual({
+    expect(db.subscription.sensorDates.mock.calls[0][0]).toEqual({
         where: { mutation_in: ['CREATED'], node: { plant: { id: 'power-plant' } } }
     })
 });
