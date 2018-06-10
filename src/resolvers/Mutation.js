@@ -74,34 +74,6 @@ function createPlant(parent, args, context, info) {
     }, info)
 }
 /**
- * Adds a new sensor date for a given plant (identified by arduino id)
- * @param {Object} parent Parent object from query
- * @param {Object} args Query arguments
- * @param {Object} context Contains headers/database bindings
- * @param {String} info Query parameters to return tis queries attributes
- */
-async function addSensorData(parent, args, context, info) {
-    // get the description of matching type
-    const sensorTypeDesc = matchType(args.type)
-    // which plant
-    const plantId = (await context.db.query.ardu({
-        where: { arduId: args.arduId }
-    }, `{ loadedPlant { id } }`)).loadedPlant.id
-
-    // Add sensor data
-    await context.db.mutation[`createSensor${sensorTypeDesc}`]({
-        data: {
-            value: args.value,
-            timeStamp: args.timeStamp,
-            plant: { connect: { id: plantId } }
-        }
-    }, null)
-
-    // Return the plant
-    return context.db.query.plant({ where: { id: plantId } }, info)
-}
-
-/**
  * Basically links an ardu to a plant (loading it)
  * @param {Object} parent Parent object from query
  * @param {Object} args Query arguments
@@ -109,8 +81,8 @@ async function addSensorData(parent, args, context, info) {
  * @param {String} info Query parameters to return tis queries attributes
  */
 async function loadPlantOnArdu(parent, args, context, info) {
-    const userId = (await context.db.query.plant({ 
-        where: { id: args.plantId } 
+    const userId = (await context.db.query.plant({
+        where: { id: args.plantId }
     }, `{ owner { id } }`)).owner.id
 
     if (userId != getUserId(context))
@@ -122,11 +94,35 @@ async function loadPlantOnArdu(parent, args, context, info) {
     }, info)
 }
 
+/**
+ * Adds a new sensor dates for a given plant (identified by arduino id)
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
+async function addSensorDates(parent, args, context, info) {
+    // seperate arduId from input data
+    const { arduId, ...input } = args
+    
+    // which plant
+    const plantId = (await context.db.query.ardu({
+        where: { arduId: arduId }
+    }, `{ loadedPlant { id } }`)).loadedPlant.id
+
+    // Add sensor dates
+    return context.db.mutation.createSensorDates({
+        data: {
+            ...input,
+            plant: { connect: { id: plantId } }
+        }
+    }, info)
+}
 
 module.exports = {
     signup,
     login,
     createPlant,
-    addSensorData,
+    addSensorDates,
     loadPlantOnArdu
 }
