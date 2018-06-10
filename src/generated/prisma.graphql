@@ -1,5 +1,5 @@
 # source: http://localhost:4466/plantsdb/dev
-# timestamp: Wed May 30 2018 15:18:41 GMT+0200 (CEST)
+# timestamp: Sun Jun 10 2018 17:10:42 GMT+0200 (CEST)
 
 type AggregateArdu {
   count: Int!
@@ -9,19 +9,7 @@ type AggregatePlant {
   count: Int!
 }
 
-type AggregateSensorHumidity {
-  count: Int!
-}
-
-type AggregateSensorLoudness {
-  count: Int!
-}
-
-type AggregateSensorRadiation {
-  count: Int!
-}
-
-type AggregateSensorTemperature {
+type AggregateSensorDates {
   count: Int!
 }
 
@@ -190,45 +178,27 @@ type Mutation {
   createUser(data: UserCreateInput!): User!
   createPlant(data: PlantCreateInput!): Plant!
   createArdu(data: ArduCreateInput!): Ardu!
-  createSensorTemperature(data: SensorTemperatureCreateInput!): SensorTemperature!
-  createSensorRadiation(data: SensorRadiationCreateInput!): SensorRadiation!
-  createSensorHumidity(data: SensorHumidityCreateInput!): SensorHumidity!
-  createSensorLoudness(data: SensorLoudnessCreateInput!): SensorLoudness!
+  createSensorDates(data: SensorDatesCreateInput!): SensorDates!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePlant(data: PlantUpdateInput!, where: PlantWhereUniqueInput!): Plant
   updateArdu(data: ArduUpdateInput!, where: ArduWhereUniqueInput!): Ardu
-  updateSensorTemperature(data: SensorTemperatureUpdateInput!, where: SensorTemperatureWhereUniqueInput!): SensorTemperature
-  updateSensorRadiation(data: SensorRadiationUpdateInput!, where: SensorRadiationWhereUniqueInput!): SensorRadiation
-  updateSensorHumidity(data: SensorHumidityUpdateInput!, where: SensorHumidityWhereUniqueInput!): SensorHumidity
-  updateSensorLoudness(data: SensorLoudnessUpdateInput!, where: SensorLoudnessWhereUniqueInput!): SensorLoudness
+  updateSensorDates(data: SensorDatesUpdateInput!, where: SensorDatesWhereUniqueInput!): SensorDates
   deleteUser(where: UserWhereUniqueInput!): User
   deletePlant(where: PlantWhereUniqueInput!): Plant
   deleteArdu(where: ArduWhereUniqueInput!): Ardu
-  deleteSensorTemperature(where: SensorTemperatureWhereUniqueInput!): SensorTemperature
-  deleteSensorRadiation(where: SensorRadiationWhereUniqueInput!): SensorRadiation
-  deleteSensorHumidity(where: SensorHumidityWhereUniqueInput!): SensorHumidity
-  deleteSensorLoudness(where: SensorLoudnessWhereUniqueInput!): SensorLoudness
+  deleteSensorDates(where: SensorDatesWhereUniqueInput!): SensorDates
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPlant(where: PlantWhereUniqueInput!, create: PlantCreateInput!, update: PlantUpdateInput!): Plant!
   upsertArdu(where: ArduWhereUniqueInput!, create: ArduCreateInput!, update: ArduUpdateInput!): Ardu!
-  upsertSensorTemperature(where: SensorTemperatureWhereUniqueInput!, create: SensorTemperatureCreateInput!, update: SensorTemperatureUpdateInput!): SensorTemperature!
-  upsertSensorRadiation(where: SensorRadiationWhereUniqueInput!, create: SensorRadiationCreateInput!, update: SensorRadiationUpdateInput!): SensorRadiation!
-  upsertSensorHumidity(where: SensorHumidityWhereUniqueInput!, create: SensorHumidityCreateInput!, update: SensorHumidityUpdateInput!): SensorHumidity!
-  upsertSensorLoudness(where: SensorLoudnessWhereUniqueInput!, create: SensorLoudnessCreateInput!, update: SensorLoudnessUpdateInput!): SensorLoudness!
+  upsertSensorDates(where: SensorDatesWhereUniqueInput!, create: SensorDatesCreateInput!, update: SensorDatesUpdateInput!): SensorDates!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyPlants(data: PlantUpdateInput!, where: PlantWhereInput): BatchPayload!
   updateManyArdus(data: ArduUpdateInput!, where: ArduWhereInput): BatchPayload!
-  updateManySensorTemperatures(data: SensorTemperatureUpdateInput!, where: SensorTemperatureWhereInput): BatchPayload!
-  updateManySensorRadiations(data: SensorRadiationUpdateInput!, where: SensorRadiationWhereInput): BatchPayload!
-  updateManySensorHumidities(data: SensorHumidityUpdateInput!, where: SensorHumidityWhereInput): BatchPayload!
-  updateManySensorLoudnesses(data: SensorLoudnessUpdateInput!, where: SensorLoudnessWhereInput): BatchPayload!
+  updateManySensorDateses(data: SensorDatesUpdateInput!, where: SensorDatesWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPlants(where: PlantWhereInput): BatchPayload!
   deleteManyArdus(where: ArduWhereInput): BatchPayload!
-  deleteManySensorTemperatures(where: SensorTemperatureWhereInput): BatchPayload!
-  deleteManySensorRadiations(where: SensorRadiationWhereInput): BatchPayload!
-  deleteManySensorHumidities(where: SensorHumidityWhereInput): BatchPayload!
-  deleteManySensorLoudnesses(where: SensorLoudnessWhereInput): BatchPayload!
+  deleteManySensorDateses(where: SensorDatesWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -270,10 +240,7 @@ type Plant implements Node {
   humidity_weight: Float
   loudness_opt: Float
   loudness_weight: Float
-  humidityData(where: SensorHumidityWhereInput, orderBy: SensorHumidityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorHumidity!]
-  temperatureData(where: SensorTemperatureWhereInput, orderBy: SensorTemperatureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorTemperature!]
-  radiationData(where: SensorRadiationWhereInput, orderBy: SensorRadiationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorRadiation!]
-  loudnessData(where: SensorLoudnessWhereInput, orderBy: SensorLoudnessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorLoudness!]
+  sensorDates(where: SensorDatesWhereInput, orderBy: SensorDatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorDates!]
 }
 
 """A connection to a list of items."""
@@ -297,10 +264,7 @@ input PlantCreateInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserCreateOneWithoutPlantsInput!
-  humidityData: SensorHumidityCreateManyWithoutPlantInput
-  temperatureData: SensorTemperatureCreateManyWithoutPlantInput
-  radiationData: SensorRadiationCreateManyWithoutPlantInput
-  loudnessData: SensorLoudnessCreateManyWithoutPlantInput
+  sensorDates: SensorDatesCreateManyWithoutPlantInput
 }
 
 input PlantCreateManyWithoutOwnerInput {
@@ -313,56 +277,9 @@ input PlantCreateOneInput {
   connect: PlantWhereUniqueInput
 }
 
-input PlantCreateOneWithoutHumidityDataInput {
-  create: PlantCreateWithoutHumidityDataInput
+input PlantCreateOneWithoutSensorDatesInput {
+  create: PlantCreateWithoutSensorDatesInput
   connect: PlantWhereUniqueInput
-}
-
-input PlantCreateOneWithoutLoudnessDataInput {
-  create: PlantCreateWithoutLoudnessDataInput
-  connect: PlantWhereUniqueInput
-}
-
-input PlantCreateOneWithoutRadiationDataInput {
-  create: PlantCreateWithoutRadiationDataInput
-  connect: PlantWhereUniqueInput
-}
-
-input PlantCreateOneWithoutTemperatureDataInput {
-  create: PlantCreateWithoutTemperatureDataInput
-  connect: PlantWhereUniqueInput
-}
-
-input PlantCreateWithoutHumidityDataInput {
-  name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
-  owner: UserCreateOneWithoutPlantsInput!
-  temperatureData: SensorTemperatureCreateManyWithoutPlantInput
-  radiationData: SensorRadiationCreateManyWithoutPlantInput
-  loudnessData: SensorLoudnessCreateManyWithoutPlantInput
-}
-
-input PlantCreateWithoutLoudnessDataInput {
-  name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
-  owner: UserCreateOneWithoutPlantsInput!
-  humidityData: SensorHumidityCreateManyWithoutPlantInput
-  temperatureData: SensorTemperatureCreateManyWithoutPlantInput
-  radiationData: SensorRadiationCreateManyWithoutPlantInput
 }
 
 input PlantCreateWithoutOwnerInput {
@@ -375,13 +292,10 @@ input PlantCreateWithoutOwnerInput {
   humidity_weight: Float
   loudness_opt: Float
   loudness_weight: Float
-  humidityData: SensorHumidityCreateManyWithoutPlantInput
-  temperatureData: SensorTemperatureCreateManyWithoutPlantInput
-  radiationData: SensorRadiationCreateManyWithoutPlantInput
-  loudnessData: SensorLoudnessCreateManyWithoutPlantInput
+  sensorDates: SensorDatesCreateManyWithoutPlantInput
 }
 
-input PlantCreateWithoutRadiationDataInput {
+input PlantCreateWithoutSensorDatesInput {
   name: String!
   temperature_opt: Float
   temperature_weight: Float
@@ -392,25 +306,6 @@ input PlantCreateWithoutRadiationDataInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserCreateOneWithoutPlantsInput!
-  humidityData: SensorHumidityCreateManyWithoutPlantInput
-  temperatureData: SensorTemperatureCreateManyWithoutPlantInput
-  loudnessData: SensorLoudnessCreateManyWithoutPlantInput
-}
-
-input PlantCreateWithoutTemperatureDataInput {
-  name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
-  owner: UserCreateOneWithoutPlantsInput!
-  humidityData: SensorHumidityCreateManyWithoutPlantInput
-  radiationData: SensorRadiationCreateManyWithoutPlantInput
-  loudnessData: SensorLoudnessCreateManyWithoutPlantInput
 }
 
 """An edge in a connection."""
@@ -512,10 +407,7 @@ input PlantUpdateDataInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserUpdateOneWithoutPlantsInput
-  humidityData: SensorHumidityUpdateManyWithoutPlantInput
-  temperatureData: SensorTemperatureUpdateManyWithoutPlantInput
-  radiationData: SensorRadiationUpdateManyWithoutPlantInput
-  loudnessData: SensorLoudnessUpdateManyWithoutPlantInput
+  sensorDates: SensorDatesUpdateManyWithoutPlantInput
 }
 
 input PlantUpdateInput {
@@ -529,10 +421,7 @@ input PlantUpdateInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserUpdateOneWithoutPlantsInput
-  humidityData: SensorHumidityUpdateManyWithoutPlantInput
-  temperatureData: SensorTemperatureUpdateManyWithoutPlantInput
-  radiationData: SensorRadiationUpdateManyWithoutPlantInput
-  loudnessData: SensorLoudnessUpdateManyWithoutPlantInput
+  sensorDates: SensorDatesUpdateManyWithoutPlantInput
 }
 
 input PlantUpdateManyWithoutOwnerInput {
@@ -553,68 +442,12 @@ input PlantUpdateOneInput {
   upsert: PlantUpsertNestedInput
 }
 
-input PlantUpdateOneWithoutHumidityDataInput {
-  create: PlantCreateWithoutHumidityDataInput
+input PlantUpdateOneWithoutSensorDatesInput {
+  create: PlantCreateWithoutSensorDatesInput
   connect: PlantWhereUniqueInput
   delete: Boolean
-  update: PlantUpdateWithoutHumidityDataDataInput
-  upsert: PlantUpsertWithoutHumidityDataInput
-}
-
-input PlantUpdateOneWithoutLoudnessDataInput {
-  create: PlantCreateWithoutLoudnessDataInput
-  connect: PlantWhereUniqueInput
-  delete: Boolean
-  update: PlantUpdateWithoutLoudnessDataDataInput
-  upsert: PlantUpsertWithoutLoudnessDataInput
-}
-
-input PlantUpdateOneWithoutRadiationDataInput {
-  create: PlantCreateWithoutRadiationDataInput
-  connect: PlantWhereUniqueInput
-  delete: Boolean
-  update: PlantUpdateWithoutRadiationDataDataInput
-  upsert: PlantUpsertWithoutRadiationDataInput
-}
-
-input PlantUpdateOneWithoutTemperatureDataInput {
-  create: PlantCreateWithoutTemperatureDataInput
-  connect: PlantWhereUniqueInput
-  delete: Boolean
-  update: PlantUpdateWithoutTemperatureDataDataInput
-  upsert: PlantUpsertWithoutTemperatureDataInput
-}
-
-input PlantUpdateWithoutHumidityDataDataInput {
-  name: String
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
-  owner: UserUpdateOneWithoutPlantsInput
-  temperatureData: SensorTemperatureUpdateManyWithoutPlantInput
-  radiationData: SensorRadiationUpdateManyWithoutPlantInput
-  loudnessData: SensorLoudnessUpdateManyWithoutPlantInput
-}
-
-input PlantUpdateWithoutLoudnessDataDataInput {
-  name: String
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
-  owner: UserUpdateOneWithoutPlantsInput
-  humidityData: SensorHumidityUpdateManyWithoutPlantInput
-  temperatureData: SensorTemperatureUpdateManyWithoutPlantInput
-  radiationData: SensorRadiationUpdateManyWithoutPlantInput
+  update: PlantUpdateWithoutSensorDatesDataInput
+  upsert: PlantUpsertWithoutSensorDatesInput
 }
 
 input PlantUpdateWithoutOwnerDataInput {
@@ -627,13 +460,10 @@ input PlantUpdateWithoutOwnerDataInput {
   humidity_weight: Float
   loudness_opt: Float
   loudness_weight: Float
-  humidityData: SensorHumidityUpdateManyWithoutPlantInput
-  temperatureData: SensorTemperatureUpdateManyWithoutPlantInput
-  radiationData: SensorRadiationUpdateManyWithoutPlantInput
-  loudnessData: SensorLoudnessUpdateManyWithoutPlantInput
+  sensorDates: SensorDatesUpdateManyWithoutPlantInput
 }
 
-input PlantUpdateWithoutRadiationDataDataInput {
+input PlantUpdateWithoutSensorDatesDataInput {
   name: String
   temperature_opt: Float
   temperature_weight: Float
@@ -644,25 +474,6 @@ input PlantUpdateWithoutRadiationDataDataInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserUpdateOneWithoutPlantsInput
-  humidityData: SensorHumidityUpdateManyWithoutPlantInput
-  temperatureData: SensorTemperatureUpdateManyWithoutPlantInput
-  loudnessData: SensorLoudnessUpdateManyWithoutPlantInput
-}
-
-input PlantUpdateWithoutTemperatureDataDataInput {
-  name: String
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
-  owner: UserUpdateOneWithoutPlantsInput
-  humidityData: SensorHumidityUpdateManyWithoutPlantInput
-  radiationData: SensorRadiationUpdateManyWithoutPlantInput
-  loudnessData: SensorLoudnessUpdateManyWithoutPlantInput
 }
 
 input PlantUpdateWithWhereUniqueWithoutOwnerInput {
@@ -675,24 +486,9 @@ input PlantUpsertNestedInput {
   create: PlantCreateInput!
 }
 
-input PlantUpsertWithoutHumidityDataInput {
-  update: PlantUpdateWithoutHumidityDataDataInput!
-  create: PlantCreateWithoutHumidityDataInput!
-}
-
-input PlantUpsertWithoutLoudnessDataInput {
-  update: PlantUpdateWithoutLoudnessDataDataInput!
-  create: PlantCreateWithoutLoudnessDataInput!
-}
-
-input PlantUpsertWithoutRadiationDataInput {
-  update: PlantUpdateWithoutRadiationDataDataInput!
-  create: PlantCreateWithoutRadiationDataInput!
-}
-
-input PlantUpsertWithoutTemperatureDataInput {
-  update: PlantUpdateWithoutTemperatureDataDataInput!
-  create: PlantCreateWithoutTemperatureDataInput!
+input PlantUpsertWithoutSensorDatesInput {
+  update: PlantUpdateWithoutSensorDatesDataInput!
+  create: PlantCreateWithoutSensorDatesInput!
 }
 
 input PlantUpsertWithWhereUniqueWithoutOwnerInput {
@@ -967,18 +763,9 @@ input PlantWhereInput {
   """All values greater than or equal the given value."""
   loudness_weight_gte: Float
   owner: UserWhereInput
-  humidityData_every: SensorHumidityWhereInput
-  humidityData_some: SensorHumidityWhereInput
-  humidityData_none: SensorHumidityWhereInput
-  temperatureData_every: SensorTemperatureWhereInput
-  temperatureData_some: SensorTemperatureWhereInput
-  temperatureData_none: SensorTemperatureWhereInput
-  radiationData_every: SensorRadiationWhereInput
-  radiationData_some: SensorRadiationWhereInput
-  radiationData_none: SensorRadiationWhereInput
-  loudnessData_every: SensorLoudnessWhereInput
-  loudnessData_some: SensorLoudnessWhereInput
-  loudnessData_none: SensorLoudnessWhereInput
+  sensorDates_every: SensorDatesWhereInput
+  sensorDates_some: SensorDatesWhereInput
+  sensorDates_none: SensorDatesWhereInput
 }
 
 input PlantWhereUniqueInput {
@@ -989,24 +776,15 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   plants(where: PlantWhereInput, orderBy: PlantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Plant]!
   ardus(where: ArduWhereInput, orderBy: ArduOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ardu]!
-  sensorTemperatures(where: SensorTemperatureWhereInput, orderBy: SensorTemperatureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorTemperature]!
-  sensorRadiations(where: SensorRadiationWhereInput, orderBy: SensorRadiationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorRadiation]!
-  sensorHumidities(where: SensorHumidityWhereInput, orderBy: SensorHumidityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorHumidity]!
-  sensorLoudnesses(where: SensorLoudnessWhereInput, orderBy: SensorLoudnessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorLoudness]!
+  sensorDateses(where: SensorDatesWhereInput, orderBy: SensorDatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorDates]!
   user(where: UserWhereUniqueInput!): User
   plant(where: PlantWhereUniqueInput!): Plant
   ardu(where: ArduWhereUniqueInput!): Ardu
-  sensorTemperature(where: SensorTemperatureWhereUniqueInput!): SensorTemperature
-  sensorRadiation(where: SensorRadiationWhereUniqueInput!): SensorRadiation
-  sensorHumidity(where: SensorHumidityWhereUniqueInput!): SensorHumidity
-  sensorLoudness(where: SensorLoudnessWhereUniqueInput!): SensorLoudness
+  sensorDates(where: SensorDatesWhereUniqueInput!): SensorDates
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   plantsConnection(where: PlantWhereInput, orderBy: PlantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlantConnection!
   ardusConnection(where: ArduWhereInput, orderBy: ArduOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArduConnection!
-  sensorTemperaturesConnection(where: SensorTemperatureWhereInput, orderBy: SensorTemperatureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SensorTemperatureConnection!
-  sensorRadiationsConnection(where: SensorRadiationWhereInput, orderBy: SensorRadiationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SensorRadiationConnection!
-  sensorHumiditiesConnection(where: SensorHumidityWhereInput, orderBy: SensorHumidityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SensorHumidityConnection!
-  sensorLoudnessesConnection(where: SensorLoudnessWhereInput, orderBy: SensorLoudnessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SensorLoudnessConnection!
+  sensorDatesesConnection(where: SensorDatesWhereInput, orderBy: SensorDatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SensorDatesConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1015,83 +793,101 @@ type Query {
   ): Node
 }
 
-type SensorHumidity implements Node {
+type SensorDates implements Node {
   id: ID!
-  plant(where: PlantWhereInput): Plant!
   timeStamp: DateTime!
-  value: Float!
+  plant(where: PlantWhereInput): Plant!
+  temperatureValue: Float!
+  radiationValue: Float!
+  humidityValue: Float!
+  loudnessValue: Float!
 }
 
 """A connection to a list of items."""
-type SensorHumidityConnection {
+type SensorDatesConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [SensorHumidityEdge]!
-  aggregate: AggregateSensorHumidity!
+  edges: [SensorDatesEdge]!
+  aggregate: AggregateSensorDates!
 }
 
-input SensorHumidityCreateInput {
+input SensorDatesCreateInput {
   timeStamp: DateTime!
-  value: Float!
-  plant: PlantCreateOneWithoutHumidityDataInput!
+  temperatureValue: Float!
+  radiationValue: Float!
+  humidityValue: Float!
+  loudnessValue: Float!
+  plant: PlantCreateOneWithoutSensorDatesInput!
 }
 
-input SensorHumidityCreateManyWithoutPlantInput {
-  create: [SensorHumidityCreateWithoutPlantInput!]
-  connect: [SensorHumidityWhereUniqueInput!]
+input SensorDatesCreateManyWithoutPlantInput {
+  create: [SensorDatesCreateWithoutPlantInput!]
+  connect: [SensorDatesWhereUniqueInput!]
 }
 
-input SensorHumidityCreateWithoutPlantInput {
+input SensorDatesCreateWithoutPlantInput {
   timeStamp: DateTime!
-  value: Float!
+  temperatureValue: Float!
+  radiationValue: Float!
+  humidityValue: Float!
+  loudnessValue: Float!
 }
 
 """An edge in a connection."""
-type SensorHumidityEdge {
+type SensorDatesEdge {
   """The item at the end of the edge."""
-  node: SensorHumidity!
+  node: SensorDates!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum SensorHumidityOrderByInput {
+enum SensorDatesOrderByInput {
   id_ASC
   id_DESC
   timeStamp_ASC
   timeStamp_DESC
-  value_ASC
-  value_DESC
+  temperatureValue_ASC
+  temperatureValue_DESC
+  radiationValue_ASC
+  radiationValue_DESC
+  humidityValue_ASC
+  humidityValue_DESC
+  loudnessValue_ASC
+  loudnessValue_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
-type SensorHumidityPreviousValues {
+type SensorDatesPreviousValues {
   id: ID!
   timeStamp: DateTime!
-  value: Float!
+  temperatureValue: Float!
+  radiationValue: Float!
+  humidityValue: Float!
+  loudnessValue: Float!
 }
 
-type SensorHumiditySubscriptionPayload {
+type SensorDatesSubscriptionPayload {
   mutation: MutationType!
-  node: SensorHumidity
+  node: SensorDates
   updatedFields: [String!]
-  previousValues: SensorHumidityPreviousValues
+  previousValues: SensorDatesPreviousValues
 }
 
-input SensorHumiditySubscriptionWhereInput {
+input SensorDatesSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [SensorHumiditySubscriptionWhereInput!]
+  AND: [SensorDatesSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [SensorHumiditySubscriptionWhereInput!]
+  OR: [SensorDatesSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorHumiditySubscriptionWhereInput!]
+  NOT: [SensorDatesSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1112,49 +908,55 @@ input SensorHumiditySubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: SensorHumidityWhereInput
+  node: SensorDatesWhereInput
 }
 
-input SensorHumidityUpdateInput {
+input SensorDatesUpdateInput {
   timeStamp: DateTime
-  value: Float
-  plant: PlantUpdateOneWithoutHumidityDataInput
+  temperatureValue: Float
+  radiationValue: Float
+  humidityValue: Float
+  loudnessValue: Float
+  plant: PlantUpdateOneWithoutSensorDatesInput
 }
 
-input SensorHumidityUpdateManyWithoutPlantInput {
-  create: [SensorHumidityCreateWithoutPlantInput!]
-  connect: [SensorHumidityWhereUniqueInput!]
-  disconnect: [SensorHumidityWhereUniqueInput!]
-  delete: [SensorHumidityWhereUniqueInput!]
-  update: [SensorHumidityUpdateWithWhereUniqueWithoutPlantInput!]
-  upsert: [SensorHumidityUpsertWithWhereUniqueWithoutPlantInput!]
+input SensorDatesUpdateManyWithoutPlantInput {
+  create: [SensorDatesCreateWithoutPlantInput!]
+  connect: [SensorDatesWhereUniqueInput!]
+  disconnect: [SensorDatesWhereUniqueInput!]
+  delete: [SensorDatesWhereUniqueInput!]
+  update: [SensorDatesUpdateWithWhereUniqueWithoutPlantInput!]
+  upsert: [SensorDatesUpsertWithWhereUniqueWithoutPlantInput!]
 }
 
-input SensorHumidityUpdateWithoutPlantDataInput {
+input SensorDatesUpdateWithoutPlantDataInput {
   timeStamp: DateTime
-  value: Float
+  temperatureValue: Float
+  radiationValue: Float
+  humidityValue: Float
+  loudnessValue: Float
 }
 
-input SensorHumidityUpdateWithWhereUniqueWithoutPlantInput {
-  where: SensorHumidityWhereUniqueInput!
-  data: SensorHumidityUpdateWithoutPlantDataInput!
+input SensorDatesUpdateWithWhereUniqueWithoutPlantInput {
+  where: SensorDatesWhereUniqueInput!
+  data: SensorDatesUpdateWithoutPlantDataInput!
 }
 
-input SensorHumidityUpsertWithWhereUniqueWithoutPlantInput {
-  where: SensorHumidityWhereUniqueInput!
-  update: SensorHumidityUpdateWithoutPlantDataInput!
-  create: SensorHumidityCreateWithoutPlantInput!
+input SensorDatesUpsertWithWhereUniqueWithoutPlantInput {
+  where: SensorDatesWhereUniqueInput!
+  update: SensorDatesUpdateWithoutPlantDataInput!
+  create: SensorDatesCreateWithoutPlantInput!
 }
 
-input SensorHumidityWhereInput {
+input SensorDatesWhereInput {
   """Logical AND on all given filters."""
-  AND: [SensorHumidityWhereInput!]
+  AND: [SensorDatesWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [SensorHumidityWhereInput!]
+  OR: [SensorDatesWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorHumidityWhereInput!]
+  NOT: [SensorDatesWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1217,725 +1019,98 @@ input SensorHumidityWhereInput {
 
   """All values greater than or equal the given value."""
   timeStamp_gte: DateTime
-  value: Float
+  temperatureValue: Float
 
   """All values that are not equal to given value."""
-  value_not: Float
+  temperatureValue_not: Float
 
   """All values that are contained in given list."""
-  value_in: [Float!]
+  temperatureValue_in: [Float!]
 
   """All values that are not contained in given list."""
-  value_not_in: [Float!]
+  temperatureValue_not_in: [Float!]
 
   """All values less than the given value."""
-  value_lt: Float
+  temperatureValue_lt: Float
 
   """All values less than or equal the given value."""
-  value_lte: Float
+  temperatureValue_lte: Float
 
   """All values greater than the given value."""
-  value_gt: Float
+  temperatureValue_gt: Float
 
   """All values greater than or equal the given value."""
-  value_gte: Float
+  temperatureValue_gte: Float
+  radiationValue: Float
+
+  """All values that are not equal to given value."""
+  radiationValue_not: Float
+
+  """All values that are contained in given list."""
+  radiationValue_in: [Float!]
+
+  """All values that are not contained in given list."""
+  radiationValue_not_in: [Float!]
+
+  """All values less than the given value."""
+  radiationValue_lt: Float
+
+  """All values less than or equal the given value."""
+  radiationValue_lte: Float
+
+  """All values greater than the given value."""
+  radiationValue_gt: Float
+
+  """All values greater than or equal the given value."""
+  radiationValue_gte: Float
+  humidityValue: Float
+
+  """All values that are not equal to given value."""
+  humidityValue_not: Float
+
+  """All values that are contained in given list."""
+  humidityValue_in: [Float!]
+
+  """All values that are not contained in given list."""
+  humidityValue_not_in: [Float!]
+
+  """All values less than the given value."""
+  humidityValue_lt: Float
+
+  """All values less than or equal the given value."""
+  humidityValue_lte: Float
+
+  """All values greater than the given value."""
+  humidityValue_gt: Float
+
+  """All values greater than or equal the given value."""
+  humidityValue_gte: Float
+  loudnessValue: Float
+
+  """All values that are not equal to given value."""
+  loudnessValue_not: Float
+
+  """All values that are contained in given list."""
+  loudnessValue_in: [Float!]
+
+  """All values that are not contained in given list."""
+  loudnessValue_not_in: [Float!]
+
+  """All values less than the given value."""
+  loudnessValue_lt: Float
+
+  """All values less than or equal the given value."""
+  loudnessValue_lte: Float
+
+  """All values greater than the given value."""
+  loudnessValue_gt: Float
+
+  """All values greater than or equal the given value."""
+  loudnessValue_gte: Float
   plant: PlantWhereInput
 }
 
-input SensorHumidityWhereUniqueInput {
-  id: ID
-}
-
-type SensorLoudness implements Node {
-  id: ID!
-  plant(where: PlantWhereInput): Plant!
-  timeStamp: DateTime!
-  value: Float!
-}
-
-"""A connection to a list of items."""
-type SensorLoudnessConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [SensorLoudnessEdge]!
-  aggregate: AggregateSensorLoudness!
-}
-
-input SensorLoudnessCreateInput {
-  timeStamp: DateTime!
-  value: Float!
-  plant: PlantCreateOneWithoutLoudnessDataInput!
-}
-
-input SensorLoudnessCreateManyWithoutPlantInput {
-  create: [SensorLoudnessCreateWithoutPlantInput!]
-  connect: [SensorLoudnessWhereUniqueInput!]
-}
-
-input SensorLoudnessCreateWithoutPlantInput {
-  timeStamp: DateTime!
-  value: Float!
-}
-
-"""An edge in a connection."""
-type SensorLoudnessEdge {
-  """The item at the end of the edge."""
-  node: SensorLoudness!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum SensorLoudnessOrderByInput {
-  id_ASC
-  id_DESC
-  timeStamp_ASC
-  timeStamp_DESC
-  value_ASC
-  value_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type SensorLoudnessPreviousValues {
-  id: ID!
-  timeStamp: DateTime!
-  value: Float!
-}
-
-type SensorLoudnessSubscriptionPayload {
-  mutation: MutationType!
-  node: SensorLoudness
-  updatedFields: [String!]
-  previousValues: SensorLoudnessPreviousValues
-}
-
-input SensorLoudnessSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SensorLoudnessSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SensorLoudnessSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorLoudnessSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: SensorLoudnessWhereInput
-}
-
-input SensorLoudnessUpdateInput {
-  timeStamp: DateTime
-  value: Float
-  plant: PlantUpdateOneWithoutLoudnessDataInput
-}
-
-input SensorLoudnessUpdateManyWithoutPlantInput {
-  create: [SensorLoudnessCreateWithoutPlantInput!]
-  connect: [SensorLoudnessWhereUniqueInput!]
-  disconnect: [SensorLoudnessWhereUniqueInput!]
-  delete: [SensorLoudnessWhereUniqueInput!]
-  update: [SensorLoudnessUpdateWithWhereUniqueWithoutPlantInput!]
-  upsert: [SensorLoudnessUpsertWithWhereUniqueWithoutPlantInput!]
-}
-
-input SensorLoudnessUpdateWithoutPlantDataInput {
-  timeStamp: DateTime
-  value: Float
-}
-
-input SensorLoudnessUpdateWithWhereUniqueWithoutPlantInput {
-  where: SensorLoudnessWhereUniqueInput!
-  data: SensorLoudnessUpdateWithoutPlantDataInput!
-}
-
-input SensorLoudnessUpsertWithWhereUniqueWithoutPlantInput {
-  where: SensorLoudnessWhereUniqueInput!
-  update: SensorLoudnessUpdateWithoutPlantDataInput!
-  create: SensorLoudnessCreateWithoutPlantInput!
-}
-
-input SensorLoudnessWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SensorLoudnessWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SensorLoudnessWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorLoudnessWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  timeStamp: DateTime
-
-  """All values that are not equal to given value."""
-  timeStamp_not: DateTime
-
-  """All values that are contained in given list."""
-  timeStamp_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  timeStamp_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  timeStamp_lt: DateTime
-
-  """All values less than or equal the given value."""
-  timeStamp_lte: DateTime
-
-  """All values greater than the given value."""
-  timeStamp_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  timeStamp_gte: DateTime
-  value: Float
-
-  """All values that are not equal to given value."""
-  value_not: Float
-
-  """All values that are contained in given list."""
-  value_in: [Float!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [Float!]
-
-  """All values less than the given value."""
-  value_lt: Float
-
-  """All values less than or equal the given value."""
-  value_lte: Float
-
-  """All values greater than the given value."""
-  value_gt: Float
-
-  """All values greater than or equal the given value."""
-  value_gte: Float
-  plant: PlantWhereInput
-}
-
-input SensorLoudnessWhereUniqueInput {
-  id: ID
-}
-
-type SensorRadiation implements Node {
-  id: ID!
-  plant(where: PlantWhereInput): Plant!
-  timeStamp: DateTime!
-  value: Float!
-}
-
-"""A connection to a list of items."""
-type SensorRadiationConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [SensorRadiationEdge]!
-  aggregate: AggregateSensorRadiation!
-}
-
-input SensorRadiationCreateInput {
-  timeStamp: DateTime!
-  value: Float!
-  plant: PlantCreateOneWithoutRadiationDataInput!
-}
-
-input SensorRadiationCreateManyWithoutPlantInput {
-  create: [SensorRadiationCreateWithoutPlantInput!]
-  connect: [SensorRadiationWhereUniqueInput!]
-}
-
-input SensorRadiationCreateWithoutPlantInput {
-  timeStamp: DateTime!
-  value: Float!
-}
-
-"""An edge in a connection."""
-type SensorRadiationEdge {
-  """The item at the end of the edge."""
-  node: SensorRadiation!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum SensorRadiationOrderByInput {
-  id_ASC
-  id_DESC
-  timeStamp_ASC
-  timeStamp_DESC
-  value_ASC
-  value_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type SensorRadiationPreviousValues {
-  id: ID!
-  timeStamp: DateTime!
-  value: Float!
-}
-
-type SensorRadiationSubscriptionPayload {
-  mutation: MutationType!
-  node: SensorRadiation
-  updatedFields: [String!]
-  previousValues: SensorRadiationPreviousValues
-}
-
-input SensorRadiationSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SensorRadiationSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SensorRadiationSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorRadiationSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: SensorRadiationWhereInput
-}
-
-input SensorRadiationUpdateInput {
-  timeStamp: DateTime
-  value: Float
-  plant: PlantUpdateOneWithoutRadiationDataInput
-}
-
-input SensorRadiationUpdateManyWithoutPlantInput {
-  create: [SensorRadiationCreateWithoutPlantInput!]
-  connect: [SensorRadiationWhereUniqueInput!]
-  disconnect: [SensorRadiationWhereUniqueInput!]
-  delete: [SensorRadiationWhereUniqueInput!]
-  update: [SensorRadiationUpdateWithWhereUniqueWithoutPlantInput!]
-  upsert: [SensorRadiationUpsertWithWhereUniqueWithoutPlantInput!]
-}
-
-input SensorRadiationUpdateWithoutPlantDataInput {
-  timeStamp: DateTime
-  value: Float
-}
-
-input SensorRadiationUpdateWithWhereUniqueWithoutPlantInput {
-  where: SensorRadiationWhereUniqueInput!
-  data: SensorRadiationUpdateWithoutPlantDataInput!
-}
-
-input SensorRadiationUpsertWithWhereUniqueWithoutPlantInput {
-  where: SensorRadiationWhereUniqueInput!
-  update: SensorRadiationUpdateWithoutPlantDataInput!
-  create: SensorRadiationCreateWithoutPlantInput!
-}
-
-input SensorRadiationWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SensorRadiationWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SensorRadiationWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorRadiationWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  timeStamp: DateTime
-
-  """All values that are not equal to given value."""
-  timeStamp_not: DateTime
-
-  """All values that are contained in given list."""
-  timeStamp_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  timeStamp_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  timeStamp_lt: DateTime
-
-  """All values less than or equal the given value."""
-  timeStamp_lte: DateTime
-
-  """All values greater than the given value."""
-  timeStamp_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  timeStamp_gte: DateTime
-  value: Float
-
-  """All values that are not equal to given value."""
-  value_not: Float
-
-  """All values that are contained in given list."""
-  value_in: [Float!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [Float!]
-
-  """All values less than the given value."""
-  value_lt: Float
-
-  """All values less than or equal the given value."""
-  value_lte: Float
-
-  """All values greater than the given value."""
-  value_gt: Float
-
-  """All values greater than or equal the given value."""
-  value_gte: Float
-  plant: PlantWhereInput
-}
-
-input SensorRadiationWhereUniqueInput {
-  id: ID
-}
-
-type SensorTemperature implements Node {
-  id: ID!
-  plant(where: PlantWhereInput): Plant!
-  timeStamp: DateTime!
-  value: Float!
-}
-
-"""A connection to a list of items."""
-type SensorTemperatureConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [SensorTemperatureEdge]!
-  aggregate: AggregateSensorTemperature!
-}
-
-input SensorTemperatureCreateInput {
-  timeStamp: DateTime!
-  value: Float!
-  plant: PlantCreateOneWithoutTemperatureDataInput!
-}
-
-input SensorTemperatureCreateManyWithoutPlantInput {
-  create: [SensorTemperatureCreateWithoutPlantInput!]
-  connect: [SensorTemperatureWhereUniqueInput!]
-}
-
-input SensorTemperatureCreateWithoutPlantInput {
-  timeStamp: DateTime!
-  value: Float!
-}
-
-"""An edge in a connection."""
-type SensorTemperatureEdge {
-  """The item at the end of the edge."""
-  node: SensorTemperature!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum SensorTemperatureOrderByInput {
-  id_ASC
-  id_DESC
-  timeStamp_ASC
-  timeStamp_DESC
-  value_ASC
-  value_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type SensorTemperaturePreviousValues {
-  id: ID!
-  timeStamp: DateTime!
-  value: Float!
-}
-
-type SensorTemperatureSubscriptionPayload {
-  mutation: MutationType!
-  node: SensorTemperature
-  updatedFields: [String!]
-  previousValues: SensorTemperaturePreviousValues
-}
-
-input SensorTemperatureSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SensorTemperatureSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SensorTemperatureSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorTemperatureSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: SensorTemperatureWhereInput
-}
-
-input SensorTemperatureUpdateInput {
-  timeStamp: DateTime
-  value: Float
-  plant: PlantUpdateOneWithoutTemperatureDataInput
-}
-
-input SensorTemperatureUpdateManyWithoutPlantInput {
-  create: [SensorTemperatureCreateWithoutPlantInput!]
-  connect: [SensorTemperatureWhereUniqueInput!]
-  disconnect: [SensorTemperatureWhereUniqueInput!]
-  delete: [SensorTemperatureWhereUniqueInput!]
-  update: [SensorTemperatureUpdateWithWhereUniqueWithoutPlantInput!]
-  upsert: [SensorTemperatureUpsertWithWhereUniqueWithoutPlantInput!]
-}
-
-input SensorTemperatureUpdateWithoutPlantDataInput {
-  timeStamp: DateTime
-  value: Float
-}
-
-input SensorTemperatureUpdateWithWhereUniqueWithoutPlantInput {
-  where: SensorTemperatureWhereUniqueInput!
-  data: SensorTemperatureUpdateWithoutPlantDataInput!
-}
-
-input SensorTemperatureUpsertWithWhereUniqueWithoutPlantInput {
-  where: SensorTemperatureWhereUniqueInput!
-  update: SensorTemperatureUpdateWithoutPlantDataInput!
-  create: SensorTemperatureCreateWithoutPlantInput!
-}
-
-input SensorTemperatureWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SensorTemperatureWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SensorTemperatureWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SensorTemperatureWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  timeStamp: DateTime
-
-  """All values that are not equal to given value."""
-  timeStamp_not: DateTime
-
-  """All values that are contained in given list."""
-  timeStamp_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  timeStamp_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  timeStamp_lt: DateTime
-
-  """All values less than or equal the given value."""
-  timeStamp_lte: DateTime
-
-  """All values greater than the given value."""
-  timeStamp_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  timeStamp_gte: DateTime
-  value: Float
-
-  """All values that are not equal to given value."""
-  value_not: Float
-
-  """All values that are contained in given list."""
-  value_in: [Float!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [Float!]
-
-  """All values less than the given value."""
-  value_lt: Float
-
-  """All values less than or equal the given value."""
-  value_lte: Float
-
-  """All values greater than the given value."""
-  value_gt: Float
-
-  """All values greater than or equal the given value."""
-  value_gte: Float
-  plant: PlantWhereInput
-}
-
-input SensorTemperatureWhereUniqueInput {
+input SensorDatesWhereUniqueInput {
   id: ID
 }
 
@@ -1943,10 +1118,7 @@ type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   plant(where: PlantSubscriptionWhereInput): PlantSubscriptionPayload
   ardu(where: ArduSubscriptionWhereInput): ArduSubscriptionPayload
-  sensorTemperature(where: SensorTemperatureSubscriptionWhereInput): SensorTemperatureSubscriptionPayload
-  sensorRadiation(where: SensorRadiationSubscriptionWhereInput): SensorRadiationSubscriptionPayload
-  sensorHumidity(where: SensorHumiditySubscriptionWhereInput): SensorHumiditySubscriptionPayload
-  sensorLoudness(where: SensorLoudnessSubscriptionWhereInput): SensorLoudnessSubscriptionPayload
+  sensorDates(where: SensorDatesSubscriptionWhereInput): SensorDatesSubscriptionPayload
 }
 
 type User implements Node {

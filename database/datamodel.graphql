@@ -23,10 +23,7 @@ type Plant {
     loudness_opt: Float
     loudness_weight: Float
 
-    humidityData: [SensorHumidity!]!
-    temperatureData: [SensorTemperature!]!
-    radiationData: [SensorRadiation!]!
-    loudnessData: [SensorLoudness!]!
+    sensorDates: [SensorDates!]!
 }
 
 type Ardu {
@@ -34,27 +31,12 @@ type Ardu {
     loadedPlant: Plant
 }
 
-type SensorTemperature {
+type SensorDates {
     id: ID! @unique
-    plant: Plant!
     timeStamp: DateTime!
-    value: Float!
-}
-type SensorRadiation {
-    id: ID! @unique
     plant: Plant!
-    timeStamp: DateTime!
-    value: Float!
-}
-type SensorHumidity {
-    id: ID! @unique
-    plant: Plant!
-    timeStamp: DateTime!
-    value: Float!
-}
-type SensorLoudness {
-    id: ID! @unique
-    plant: Plant!
-    timeStamp: DateTime!
-    value: Float!
+    temperatureValue: Float!
+    radiationValue: Float!
+    humidityValue: Float!
+    loudnessValue: Float!
 }
