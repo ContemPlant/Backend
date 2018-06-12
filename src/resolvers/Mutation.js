@@ -88,6 +88,13 @@ async function loadPlantOnArdu(parent, args, context, info) {
     if (userId != getUserId(context))
         throw new Error("Client does not have permisson to load plant")
 
+        
+    // check that plantID isn't already loaded to another ardu
+    let ardusPlantIsLoadedTo = await context.db.query.ardus({ where: { loadedPlant: { id: args.plantId } } })
+    if (ardusPlantIsLoadedTo.length > 0)
+        throw new Error("Plant is already loaded to another ardu!")
+
+
     return context.db.mutation.updateArdu({
         where: { arduId: args.arduId, },
         data: { loadedPlant: { connect: { id: args.plantId } } }
@@ -104,7 +111,7 @@ async function loadPlantOnArdu(parent, args, context, info) {
 async function addSensorDates(parent, args, context, info) {
     // seperate arduId from input data
     const { arduId, ...input } = args
-    
+
     // which plant
     const plantId = (await context.db.query.ardu({
         where: { arduId: arduId }
