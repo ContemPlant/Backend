@@ -65,10 +65,10 @@ async function login(parent, args, context, info) {
  * @param {Object} context Contains headers/database bindings
  * @param {String} info Query parameters to return tis queries attributes
  */
-function createPlant(parent, args, context, info) {
+function createPlant(parent, { input }, context, info) {
     return context.db.mutation.createPlant({
         data: {
-            ...args,
+            ...input,
             owner: { connect: { id: getUserId(context) } }
         }
     }, info)
@@ -102,21 +102,24 @@ async function loadPlantOnArdu(parent, args, context, info) {
  * @param {String} info Query parameters to return tis queries attributes
  */
 async function addSensorDates(parent, args, context, info) {
-    // seperate arduId from input data
-    const { arduId, ...input } = args
-    
+    //seperate arduId from input data
+    const { where, input } = args
+    // Seperate state from rest of input values
+    const { state, ...values } = input
+
     // which plant
     const plantId = (await context.db.query.ardu({
-        where: { arduId: arduId }
+        where: { arduId: where.arduId }
     }, `{ loadedPlant { id } }`)).loadedPlant.id
 
-    // Add sensor dates
-    return context.db.mutation.createSensorDates({
-        data: {
-            ...input,
-            plant: { connect: { id: plantId } }
-        }
-    }, info)
+    const data = {
+        ...values,
+        state: { create: state },
+        plant: { connect: { id: plantId } }
+    }
+
+    //Add sensor dates
+    return context.db.mutation.createSensorDates({ data }, info)
 }
 
 module.exports = {
