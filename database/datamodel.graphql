@@ -39,4 +39,12 @@ type SensorDates {
     radiationValue: Float!
     humidityValue: Float!
     loudnessValue: Float!
+    state: PlantState!
+}
+
+type PlantState {
+    id: ID! @unique
+    environment: Float!
+    health: Float!
+    growth: Float!
 }
