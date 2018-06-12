@@ -24,19 +24,23 @@ test('adds sensor dates', async () => {
     store.ardus.push({ arduId: 'ardu1', loadedPlant: { id: 'plant1' } })
     store.plants.push({ id: 'plant1' })
 
-    const args = {
-        arduId: 'ardu1',
+    const input = {
         timeStamp: 'now',
         temperatureValue: 10,
         humidityValue: 10,
         radiationValue: 20,
-        loudnessValue: 1337
+        loudnessValue: 1337,
+        state: {
+            health: 10,
+            growth: 10,
+            environment: 1
+        }
     }
+    const where = { arduId: 'ardu1' }
     // Destructure the args to only get sensordate properties
-    const { arduId, ...sensorDate } = args
 
-    const sensorDates = await addSensorDates(null, args, {db}, null)
+    const sensorDates = await addSensorDates(null, { input, where }, { db }, null)
     // Store now contains the sensorDate and is also connected to a plant
-    expect(store.sensors[0]).toEqual({ ...sensorDate, plant: { connect: { id: 'plant1' } } })
+    expect(store.sensors[0]).toEqual({ ...sensorDates, plant: { connect: { id: 'plant1' } } })
 
 })
