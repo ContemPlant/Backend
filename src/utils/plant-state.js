@@ -14,8 +14,8 @@ const lim = require('./limit.js')({ min: 0 })({ max: 1 })
 function environment(values, weights, optimas, maxDeviations = [10, 20, 100, 100]) {
 
     const weightSum = lo.sum(weights)
-    weights = weights.map(weight => weight / weightSum)
 
+    weights = weights.map(weight => weight / weightSum)
     // Gaussian bell like function
     const fnct = (max) => (deviation) =>
         deviation > max
