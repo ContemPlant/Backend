@@ -66,6 +66,8 @@ type Mutation {
     ): Plant
 
     loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
+    unloadPlantFromArdu(arduId: String!): Ardu
+    unloadPlant(plantId: ID!): Ardu
 }
 
 type Subscription {

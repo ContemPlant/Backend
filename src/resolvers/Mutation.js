@@ -74,6 +74,30 @@ function createPlant(parent, args, context, info) {
     }, info)
 }
 /**
+ * returns true if the plant with the given plantID is allowed to be edited from the given context
+ * @param {Object} context context in which plant editing permission are checked...
+ * @param {Object} plantID the id of the plant 
+ */
+async function hasPlantEditPermissionInContext(context, plantID) {
+    const plantOwnerID = (await context.db.query.plant({
+        where: { id: plantID }
+    }, `{ owner { id } }`)).owner.id
+
+    if (plantOwnerID != getUserId(context))
+        return false
+    
+    return true
+}
+/**
+ * Returns the ardu which has loaded the plant with the given ID
+ * @param {Object} context the context
+ * @param {Object} plantID the plant id
+ */
+async function arduPlantIsLoadedToInContext(context, plantID) {
+    return (await context.db.query.ardus({ where: { loadedPlant: { id: plantID } } }) )[0]
+}
+
+/**
  * Basically links an ardu to a plant (loading it)
  * @param {Object} parent Parent object from query
  * @param {Object} args Query arguments
@@ -81,17 +105,13 @@ function createPlant(parent, args, context, info) {
  * @param {String} info Query parameters to return tis queries attributes
  */
 async function loadPlantOnArdu(parent, args, context, info) {
-    const userId = (await context.db.query.plant({
-        where: { id: args.plantId }
-    }, `{ owner { id } }`)).owner.id
-
-    if (userId != getUserId(context))
+    if (!(await hasPlantEditPermissionInContext(context, args.plantId)))
         throw new Error("Client does not have permisson to load plant")
 
-        
+
     // check that plantID isn't already loaded to another ardu
-    let ardusPlantIsLoadedTo = await context.db.query.ardus({ where: { loadedPlant: { id: args.plantId } } })
-    if (ardusPlantIsLoadedTo.length > 0)
+    let arduPlantIsLoadedTo = await arduPlantIsLoadedToInContext(context, args.plantId)
+    if (arduPlantIsLoadedTo)
         throw new Error("Plant is already loaded to another ardu!")
 
 
@@ -99,6 +119,55 @@ async function loadPlantOnArdu(parent, args, context, info) {
         where: { arduId: args.arduId, },
         data: { loadedPlant: { connect: { id: args.plantId } } }
     }, info)
+}
+
+async function loadedPlantOnArduWithID(arduID, context) {
+    return (await context.db.query.ardus( { where: { arduId: arduID} }, "{loadedPlant { id }}" ))[0].loadedPlant
+}
+
+/**
+ * Basically unloads a plant from an ardu in the database by unlinking the plant from the ardu
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
+async function unloadPlantFromArdu(parent, args, context, info) {
+    //get the plant loaded to the ardu
+    let loadedPlant = await loadedPlantOnArduWithID(args.arduId, context)
+
+    if (!loadedPlant)
+        throw new Error("No plant is loaded to the given ardu... Sorry!")
+
+    if (!(await hasPlantEditPermissionInContext(context, loadedPlant.id)))
+        throw new Error("Client does not have permission to unload plant")
+
+    //unload the loaded plant
+    return context.db.mutation.updateArdu({
+        data: {
+            loadedPlant: {
+                disconnect: true
+            }
+        },
+        where: {
+            arduId: args.arduId
+        }
+    })
+}
+/**
+ * Unloads a plant with a given ID
+ * @param {Object} parent Parent object from query
+ * @param {Object} args Query arguments
+ * @param {Object} context Contains headers/database bindings
+ * @param {String} info Query parameters to return tis queries attributes
+ */
+async function unloadPlant(parent, args, context, info) {
+    let arduPlantIsLoadedTo = await arduPlantIsLoadedToInContext(context, args.plantId)
+
+    if (!arduPlantIsLoadedTo)
+        throw new Error("The plant cannot be unloaded, because it wasn't loaded previously!")
+
+    return unloadPlantFromArdu(parent, {arduId: arduPlantIsLoadedTo.arduId}, context, info)
 }
 
 /**
@@ -131,5 +200,7 @@ module.exports = {
     login,
     createPlant,
     addSensorDates,
-    loadPlantOnArdu
+    loadPlantOnArdu,
+    unloadPlantFromArdu,
+    unloadPlant
 }
