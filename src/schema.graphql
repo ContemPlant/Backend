@@ -47,7 +47,7 @@ type Mutation {
     signup(username: String!, email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
     createPlant(input: createPlantInput!): Plant
-    addSensorDates( input: addSensorDatesInput! where: addSensorDatesWhereInput!): SensorDates!
+    addSensorDates(input: addSensorDatesInput! where: addSensorDatesWhereInput!): SensorDates!
     loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
 }
 
