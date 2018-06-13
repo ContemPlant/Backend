@@ -7,5 +7,6 @@ const APP_SECRET = 'sabine123'
 
 module.exports = {
     APP_SECRET,
-    getUserId: require('./get-user-id.js')({ APP_SECRET })
+    getUserId: require('./get-user-id.js')({ APP_SECRET }),
+    plantState: require('./plant-state.js')
 }
