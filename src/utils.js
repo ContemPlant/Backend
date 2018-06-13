@@ -23,24 +23,7 @@ function getUserId(context) {
     return userId
 }
 
-/**
- * Returns the type identifier for given enum string
- * @param {String} enumString String corresponding to an enum
- * @returns type identifier
- */
-const matchType = enumString =>
-    enumString == 'TEMP'
-        ? 'Temperature'
-        : enumString == 'RAD'
-            ? 'Radiation'
-            : enumString == 'HUM'
-                ? 'Humidity'
-                : enumString == 'LOUD'
-                    ? 'Loudness'
-                    : null
-
 module.exports = {
     APP_SECRET,
-    getUserId,
-    matchType
+    getUserId
 }
