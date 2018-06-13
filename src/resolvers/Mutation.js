@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
+const { APP_SECRET, getUserId, plantState } = require('../utils')
 
 /**
  * All mutation resolvers
@@ -103,23 +103,66 @@ async function loadPlantOnArdu(parent, args, context, info) {
  */
 async function addSensorDates(parent, args, context, info) {
     //seperate arduId from input data
-    const { where, input } = args
-    // Seperate state from rest of input values
-    const { state, ...values } = input
+    const { arduId, ...sensorValues } = args.input
 
     // which plant
-    const plantId = (await context.db.query.ardu({
-        where: { arduId: where.arduId }
-    }, `{ loadedPlant { id } }`)).loadedPlant.id
+    const plant = (await context.db.query.ardu({
+        where: { arduId }
+    }, `{ 
+        loadedPlant { 
+            id
+            temperature_opt
+            temperature_weight
+            radiation_opt
+            radiation_weight
+            humidity_opt
+            humidity_weight
+            loudness_opt
+            loudness_weight 
+            plantStates(last: 1) { health size } 
+        } 
+        
+    }`)).loadedPlant
 
-    const data = {
-        ...values,
-        state: { create: state },
-        plant: { connect: { id: plantId } }
-    }
+    // Prepare data for insertion into sensorDates table
+    const data = { ...sensorValues, plant: { connect: { id: plant.id } } }
 
-    //Add sensor dates
-    return context.db.mutation.createSensorDates({ data }, info)
+    // create sensor dates
+    const sensorDates = await context.db.mutation.createSensorDates({ data }, `{ id }`)
+
+    // Destructure old health and size from last state or use 0 as initial value
+    const { health: oldHealth, size: oldSize } = plant.plantStates[0] || { health: 0, size: 0 }
+
+    // Get the current values from input
+    const { temperatureValue, humidityValue, radiationValue, loudnessValue } = sensorValues
+
+    // Get weights and optimas from plant
+    const {
+        temperature_weight, radiation_weight, humidity_weight, loudness_weight,
+        temperature_opt, radiation_opt, humidity_opt, loudness_opt
+    } = plant
+
+    // Pack into arrays
+    const values = [temperatureValue, humidityValue, radiationValue, loudnessValue],
+        weights = [temperature_weight, radiation_weight, humidity_weight, loudness_weight],
+        optimas = [temperature_opt, radiation_opt, humidity_opt, loudness_opt]
+
+    // Calculate new state
+    const environment = plantState.environment(values, weights, optimas)
+    const health = plantState.health(oldHealth, environment)
+    const size = plantState.plantSize(oldSize, health)
+    const newState = { environment, health, size }
+    // Insert new state
+    await context.db.mutation.createPlantState({
+        data: {
+            ...newState,
+            sensorDates: { connect: { id: sensorDates.id } },
+            plant: { connect: { id: plant.id } }
+        }
+    })
+
+    // Return sensorDates
+    return context.db.query.sensorDates({ where: { id: sensorDates.id } }, info)
 }
 
 module.exports = {
