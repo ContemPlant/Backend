@@ -110,7 +110,7 @@ async function loadPlantOnArdu(parent, args, context, info) {
 
 
     // check that plantID isn't already loaded to another ardu
-    let arduPlantIsLoadedTo = await arduPlantIsLoadedToInContext(context, args.plantId)
+    const arduPlantIsLoadedTo = await arduPlantIsLoadedToInContext(context, args.plantId)
     if (arduPlantIsLoadedTo)
         throw new Error("Plant is already loaded to another ardu!")
 
@@ -134,7 +134,7 @@ async function loadedPlantOnArduWithID(arduID, context) {
  */
 async function unloadPlantFromArdu(parent, args, context, info) {
     //get the plant loaded to the ardu
-    let loadedPlant = await loadedPlantOnArduWithID(args.arduId, context)
+    const loadedPlant = await loadedPlantOnArduWithID(args.arduId, context)
 
     if (!loadedPlant)
         throw new Error("No plant is loaded to the given ardu... Sorry!")
@@ -162,7 +162,7 @@ async function unloadPlantFromArdu(parent, args, context, info) {
  * @param {String} info Query parameters to return tis queries attributes
  */
 async function unloadPlant(parent, args, context, info) {
-    let arduPlantIsLoadedTo = await arduPlantIsLoadedToInContext(context, args.plantId)
+    const arduPlantIsLoadedTo = await arduPlantIsLoadedToInContext(context, args.plantId)
 
     if (!arduPlantIsLoadedTo)
         throw new Error("The plant cannot be unloaded, because it wasn't loaded previously!")
