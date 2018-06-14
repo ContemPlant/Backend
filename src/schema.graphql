@@ -1,9 +1,9 @@
-# import Plant, Ardu, ArduSubscriptionPayload from "./generated/prisma.graphql"
+# import Plant, SensorDates, Ardu, ArduSubscriptionPayload, SensorDatesSubscriptionPayload from "./generated/prisma.graphql"
 
 type Query {
     info: String!
     plants: [Plant!]!
-    plant(id: ID!): Plant!
+    plant(id: ID!): Plant
 }
 
 type AuthPayload {
@@ -18,34 +18,36 @@ type User {
   plants: [Plant!]!
 }
 
+input createPlantInput {
+    name: String!
+    temperature_opt: Float!
+    temperature_weight: Float!
+    radiation_opt: Float!
+    radiation_weight: Float!
+    humidity_opt: Float!
+    humidity_weight: Float!
+    loudness_opt: Float!
+    loudness_weight: Float!
+}
+
+input addSensorDatesInput {
+    timeStamp: DateTime!
+    temperatureValue: Float!
+    radiationValue: Float!
+    humidityValue: Float!
+    loudnessValue: Float!
+    arduId: String!
+}
+
 type Mutation {
     signup(username: String!, email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
-    addSensorData(type: SensorType!, value: Float!, arduId: String!, timeStamp: DateTime!): Plant
-    
-    createPlant(name: String!, temperature_opt: Float!, temperature_weight: Float!,
-        radiation_opt: Float!, radiation_weight: Float!,
-        humidity_opt: Float!, humidity_weight: Float!,
-        loudness_opt: Float!, loudness_weight: Float!
-    ): Plant
-
+    createPlant(input: createPlantInput!): Plant
+    addSensorDates(input: addSensorDatesInput!): SensorDates!
     loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
-}
-
-enum SensorType{
-    TEMP
-    RAD
-    HUM
-    LOUD
-}
-
-type SensorSubscriptionPayload {
-    value: Float!
-    type: SensorType!
-    timeStamp: DateTime!
 }
 
 type Subscription {
     arduChange: ArduSubscriptionPayload
-    newSensorData(plantId: ID!, type: SensorType!): SensorSubscriptionPayload
+    newSensorDates(plantId: ID!): SensorDatesSubscriptionPayload
 }
