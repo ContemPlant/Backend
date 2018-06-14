@@ -3,7 +3,7 @@
 type Query {
     info: String!
     plants: [Plant!]!
-    plant(id: ID!): Plant!
+    plant(id: ID!): Plant
 }
 
 type AuthPayload {
@@ -36,35 +36,14 @@ input addSensorDatesInput {
     radiationValue: Float!
     humidityValue: Float!
     loudnessValue: Float!
-}
-
-input addSensorDatesWhereInput {
     arduId: String!
 }
 
 type Mutation {
     signup(username: String!, email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
-
-    addSensorDates(arduId: String!,
-        timeStamp: DateTime!,
-        temperatureValue: Float!,
-        radiationValue: Float!,
-        humidityValue: Float!,
-        loudnessValue: Float!
-    ): SensorDates
-    
-    createPlant(name: String!,
-        temperature_opt: Float!,
-        temperature_weight: Float!,
-        radiation_opt: Float!,
-        radiation_weight: Float!,
-        humidity_opt: Float!,
-        humidity_weight: Float!,
-        loudness_opt: Float!,
-        loudness_weight: Float!
-    ): Plant
-
+    createPlant(input: createPlantInput!): Plant
+    addSensorDates(input: addSensorDatesInput!): SensorDates!
     loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
     unloadPlantFromArdu(arduId: String!): Ardu
     unloadPlant(plantId: ID!): Ardu

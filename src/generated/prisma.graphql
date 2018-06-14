@@ -1,11 +1,15 @@
 # source: http://localhost:4466/plantsdb/dev
-# timestamp: Sun Jun 10 2018 17:10:42 GMT+0200 (CEST)
+# timestamp: Wed Jun 13 2018 17:26:14 GMT+0200 (CEST)
 
 type AggregateArdu {
   count: Int!
 }
 
 type AggregatePlant {
+  count: Int!
+}
+
+type AggregatePlantState {
   count: Int!
 }
 
@@ -179,26 +183,32 @@ type Mutation {
   createPlant(data: PlantCreateInput!): Plant!
   createArdu(data: ArduCreateInput!): Ardu!
   createSensorDates(data: SensorDatesCreateInput!): SensorDates!
+  createPlantState(data: PlantStateCreateInput!): PlantState!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePlant(data: PlantUpdateInput!, where: PlantWhereUniqueInput!): Plant
   updateArdu(data: ArduUpdateInput!, where: ArduWhereUniqueInput!): Ardu
   updateSensorDates(data: SensorDatesUpdateInput!, where: SensorDatesWhereUniqueInput!): SensorDates
+  updatePlantState(data: PlantStateUpdateInput!, where: PlantStateWhereUniqueInput!): PlantState
   deleteUser(where: UserWhereUniqueInput!): User
   deletePlant(where: PlantWhereUniqueInput!): Plant
   deleteArdu(where: ArduWhereUniqueInput!): Ardu
   deleteSensorDates(where: SensorDatesWhereUniqueInput!): SensorDates
+  deletePlantState(where: PlantStateWhereUniqueInput!): PlantState
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPlant(where: PlantWhereUniqueInput!, create: PlantCreateInput!, update: PlantUpdateInput!): Plant!
   upsertArdu(where: ArduWhereUniqueInput!, create: ArduCreateInput!, update: ArduUpdateInput!): Ardu!
   upsertSensorDates(where: SensorDatesWhereUniqueInput!, create: SensorDatesCreateInput!, update: SensorDatesUpdateInput!): SensorDates!
+  upsertPlantState(where: PlantStateWhereUniqueInput!, create: PlantStateCreateInput!, update: PlantStateUpdateInput!): PlantState!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyPlants(data: PlantUpdateInput!, where: PlantWhereInput): BatchPayload!
   updateManyArdus(data: ArduUpdateInput!, where: ArduWhereInput): BatchPayload!
   updateManySensorDateses(data: SensorDatesUpdateInput!, where: SensorDatesWhereInput): BatchPayload!
+  updateManyPlantStates(data: PlantStateUpdateInput!, where: PlantStateWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPlants(where: PlantWhereInput): BatchPayload!
   deleteManyArdus(where: ArduWhereInput): BatchPayload!
   deleteManySensorDateses(where: SensorDatesWhereInput): BatchPayload!
+  deleteManyPlantStates(where: PlantStateWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -232,14 +242,15 @@ type Plant implements Node {
   id: ID!
   owner(where: UserWhereInput): User!
   name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
+  temperature_opt: Float!
+  temperature_weight: Float!
+  radiation_opt: Float!
+  radiation_weight: Float!
+  humidity_opt: Float!
+  humidity_weight: Float!
+  loudness_opt: Float!
+  loudness_weight: Float!
+  plantStates(where: PlantStateWhereInput, orderBy: PlantStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlantState!]
   sensorDates(where: SensorDatesWhereInput, orderBy: SensorDatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorDates!]
 }
 
@@ -255,15 +266,16 @@ type PlantConnection {
 
 input PlantCreateInput {
   name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
+  temperature_opt: Float!
+  temperature_weight: Float!
+  radiation_opt: Float!
+  radiation_weight: Float!
+  humidity_opt: Float!
+  humidity_weight: Float!
+  loudness_opt: Float!
+  loudness_weight: Float!
   owner: UserCreateOneWithoutPlantsInput!
+  plantStates: PlantStateCreateManyWithoutPlantInput
   sensorDates: SensorDatesCreateManyWithoutPlantInput
 }
 
@@ -277,6 +289,11 @@ input PlantCreateOneInput {
   connect: PlantWhereUniqueInput
 }
 
+input PlantCreateOneWithoutPlantStatesInput {
+  create: PlantCreateWithoutPlantStatesInput
+  connect: PlantWhereUniqueInput
+}
+
 input PlantCreateOneWithoutSensorDatesInput {
   create: PlantCreateWithoutSensorDatesInput
   connect: PlantWhereUniqueInput
@@ -284,28 +301,44 @@ input PlantCreateOneWithoutSensorDatesInput {
 
 input PlantCreateWithoutOwnerInput {
   name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
+  temperature_opt: Float!
+  temperature_weight: Float!
+  radiation_opt: Float!
+  radiation_weight: Float!
+  humidity_opt: Float!
+  humidity_weight: Float!
+  loudness_opt: Float!
+  loudness_weight: Float!
+  plantStates: PlantStateCreateManyWithoutPlantInput
+  sensorDates: SensorDatesCreateManyWithoutPlantInput
+}
+
+input PlantCreateWithoutPlantStatesInput {
+  name: String!
+  temperature_opt: Float!
+  temperature_weight: Float!
+  radiation_opt: Float!
+  radiation_weight: Float!
+  humidity_opt: Float!
+  humidity_weight: Float!
+  loudness_opt: Float!
+  loudness_weight: Float!
+  owner: UserCreateOneWithoutPlantsInput!
   sensorDates: SensorDatesCreateManyWithoutPlantInput
 }
 
 input PlantCreateWithoutSensorDatesInput {
   name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
+  temperature_opt: Float!
+  temperature_weight: Float!
+  radiation_opt: Float!
+  radiation_weight: Float!
+  humidity_opt: Float!
+  humidity_weight: Float!
+  loudness_opt: Float!
+  loudness_weight: Float!
   owner: UserCreateOneWithoutPlantsInput!
+  plantStates: PlantStateCreateManyWithoutPlantInput
 }
 
 """An edge in a connection."""
@@ -347,14 +380,281 @@ enum PlantOrderByInput {
 type PlantPreviousValues {
   id: ID!
   name: String!
-  temperature_opt: Float
-  temperature_weight: Float
-  radiation_opt: Float
-  radiation_weight: Float
-  humidity_opt: Float
-  humidity_weight: Float
-  loudness_opt: Float
-  loudness_weight: Float
+  temperature_opt: Float!
+  temperature_weight: Float!
+  radiation_opt: Float!
+  radiation_weight: Float!
+  humidity_opt: Float!
+  humidity_weight: Float!
+  loudness_opt: Float!
+  loudness_weight: Float!
+}
+
+type PlantState implements Node {
+  id: ID!
+  environment: Float!
+  plant(where: PlantWhereInput): Plant!
+  health: Float!
+  size: Float!
+  sensorDates(where: SensorDatesWhereInput): SensorDates!
+}
+
+"""A connection to a list of items."""
+type PlantStateConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PlantStateEdge]!
+  aggregate: AggregatePlantState!
+}
+
+input PlantStateCreateInput {
+  environment: Float!
+  health: Float!
+  size: Float!
+  plant: PlantCreateOneWithoutPlantStatesInput!
+  sensorDates: SensorDatesCreateOneInput!
+}
+
+input PlantStateCreateManyWithoutPlantInput {
+  create: [PlantStateCreateWithoutPlantInput!]
+  connect: [PlantStateWhereUniqueInput!]
+}
+
+input PlantStateCreateWithoutPlantInput {
+  environment: Float!
+  health: Float!
+  size: Float!
+  sensorDates: SensorDatesCreateOneInput!
+}
+
+"""An edge in a connection."""
+type PlantStateEdge {
+  """The item at the end of the edge."""
+  node: PlantState!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PlantStateOrderByInput {
+  id_ASC
+  id_DESC
+  environment_ASC
+  environment_DESC
+  health_ASC
+  health_DESC
+  size_ASC
+  size_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PlantStatePreviousValues {
+  id: ID!
+  environment: Float!
+  health: Float!
+  size: Float!
+}
+
+type PlantStateSubscriptionPayload {
+  mutation: MutationType!
+  node: PlantState
+  updatedFields: [String!]
+  previousValues: PlantStatePreviousValues
+}
+
+input PlantStateSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PlantStateSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PlantStateSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PlantStateSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PlantStateWhereInput
+}
+
+input PlantStateUpdateInput {
+  environment: Float
+  health: Float
+  size: Float
+  plant: PlantUpdateOneWithoutPlantStatesInput
+  sensorDates: SensorDatesUpdateOneInput
+}
+
+input PlantStateUpdateManyWithoutPlantInput {
+  create: [PlantStateCreateWithoutPlantInput!]
+  connect: [PlantStateWhereUniqueInput!]
+  disconnect: [PlantStateWhereUniqueInput!]
+  delete: [PlantStateWhereUniqueInput!]
+  update: [PlantStateUpdateWithWhereUniqueWithoutPlantInput!]
+  upsert: [PlantStateUpsertWithWhereUniqueWithoutPlantInput!]
+}
+
+input PlantStateUpdateWithoutPlantDataInput {
+  environment: Float
+  health: Float
+  size: Float
+  sensorDates: SensorDatesUpdateOneInput
+}
+
+input PlantStateUpdateWithWhereUniqueWithoutPlantInput {
+  where: PlantStateWhereUniqueInput!
+  data: PlantStateUpdateWithoutPlantDataInput!
+}
+
+input PlantStateUpsertWithWhereUniqueWithoutPlantInput {
+  where: PlantStateWhereUniqueInput!
+  update: PlantStateUpdateWithoutPlantDataInput!
+  create: PlantStateCreateWithoutPlantInput!
+}
+
+input PlantStateWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PlantStateWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PlantStateWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PlantStateWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  environment: Float
+
+  """All values that are not equal to given value."""
+  environment_not: Float
+
+  """All values that are contained in given list."""
+  environment_in: [Float!]
+
+  """All values that are not contained in given list."""
+  environment_not_in: [Float!]
+
+  """All values less than the given value."""
+  environment_lt: Float
+
+  """All values less than or equal the given value."""
+  environment_lte: Float
+
+  """All values greater than the given value."""
+  environment_gt: Float
+
+  """All values greater than or equal the given value."""
+  environment_gte: Float
+  health: Float
+
+  """All values that are not equal to given value."""
+  health_not: Float
+
+  """All values that are contained in given list."""
+  health_in: [Float!]
+
+  """All values that are not contained in given list."""
+  health_not_in: [Float!]
+
+  """All values less than the given value."""
+  health_lt: Float
+
+  """All values less than or equal the given value."""
+  health_lte: Float
+
+  """All values greater than the given value."""
+  health_gt: Float
+
+  """All values greater than or equal the given value."""
+  health_gte: Float
+  size: Float
+
+  """All values that are not equal to given value."""
+  size_not: Float
+
+  """All values that are contained in given list."""
+  size_in: [Float!]
+
+  """All values that are not contained in given list."""
+  size_not_in: [Float!]
+
+  """All values less than the given value."""
+  size_lt: Float
+
+  """All values less than or equal the given value."""
+  size_lte: Float
+
+  """All values greater than the given value."""
+  size_gt: Float
+
+  """All values greater than or equal the given value."""
+  size_gte: Float
+  plant: PlantWhereInput
+  sensorDates: SensorDatesWhereInput
+}
+
+input PlantStateWhereUniqueInput {
+  id: ID
 }
 
 type PlantSubscriptionPayload {
@@ -407,6 +707,7 @@ input PlantUpdateDataInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserUpdateOneWithoutPlantsInput
+  plantStates: PlantStateUpdateManyWithoutPlantInput
   sensorDates: SensorDatesUpdateManyWithoutPlantInput
 }
 
@@ -421,6 +722,7 @@ input PlantUpdateInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserUpdateOneWithoutPlantsInput
+  plantStates: PlantStateUpdateManyWithoutPlantInput
   sensorDates: SensorDatesUpdateManyWithoutPlantInput
 }
 
@@ -442,6 +744,14 @@ input PlantUpdateOneInput {
   upsert: PlantUpsertNestedInput
 }
 
+input PlantUpdateOneWithoutPlantStatesInput {
+  create: PlantCreateWithoutPlantStatesInput
+  connect: PlantWhereUniqueInput
+  delete: Boolean
+  update: PlantUpdateWithoutPlantStatesDataInput
+  upsert: PlantUpsertWithoutPlantStatesInput
+}
+
 input PlantUpdateOneWithoutSensorDatesInput {
   create: PlantCreateWithoutSensorDatesInput
   connect: PlantWhereUniqueInput
@@ -460,6 +770,21 @@ input PlantUpdateWithoutOwnerDataInput {
   humidity_weight: Float
   loudness_opt: Float
   loudness_weight: Float
+  plantStates: PlantStateUpdateManyWithoutPlantInput
+  sensorDates: SensorDatesUpdateManyWithoutPlantInput
+}
+
+input PlantUpdateWithoutPlantStatesDataInput {
+  name: String
+  temperature_opt: Float
+  temperature_weight: Float
+  radiation_opt: Float
+  radiation_weight: Float
+  humidity_opt: Float
+  humidity_weight: Float
+  loudness_opt: Float
+  loudness_weight: Float
+  owner: UserUpdateOneWithoutPlantsInput
   sensorDates: SensorDatesUpdateManyWithoutPlantInput
 }
 
@@ -474,6 +799,7 @@ input PlantUpdateWithoutSensorDatesDataInput {
   loudness_opt: Float
   loudness_weight: Float
   owner: UserUpdateOneWithoutPlantsInput
+  plantStates: PlantStateUpdateManyWithoutPlantInput
 }
 
 input PlantUpdateWithWhereUniqueWithoutOwnerInput {
@@ -484,6 +810,11 @@ input PlantUpdateWithWhereUniqueWithoutOwnerInput {
 input PlantUpsertNestedInput {
   update: PlantUpdateDataInput!
   create: PlantCreateInput!
+}
+
+input PlantUpsertWithoutPlantStatesInput {
+  update: PlantUpdateWithoutPlantStatesDataInput!
+  create: PlantCreateWithoutPlantStatesInput!
 }
 
 input PlantUpsertWithoutSensorDatesInput {
@@ -763,6 +1094,9 @@ input PlantWhereInput {
   """All values greater than or equal the given value."""
   loudness_weight_gte: Float
   owner: UserWhereInput
+  plantStates_every: PlantStateWhereInput
+  plantStates_some: PlantStateWhereInput
+  plantStates_none: PlantStateWhereInput
   sensorDates_every: SensorDatesWhereInput
   sensorDates_some: SensorDatesWhereInput
   sensorDates_none: SensorDatesWhereInput
@@ -777,14 +1111,17 @@ type Query {
   plants(where: PlantWhereInput, orderBy: PlantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Plant]!
   ardus(where: ArduWhereInput, orderBy: ArduOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ardu]!
   sensorDateses(where: SensorDatesWhereInput, orderBy: SensorDatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SensorDates]!
+  plantStates(where: PlantStateWhereInput, orderBy: PlantStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlantState]!
   user(where: UserWhereUniqueInput!): User
   plant(where: PlantWhereUniqueInput!): Plant
   ardu(where: ArduWhereUniqueInput!): Ardu
   sensorDates(where: SensorDatesWhereUniqueInput!): SensorDates
+  plantState(where: PlantStateWhereUniqueInput!): PlantState
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   plantsConnection(where: PlantWhereInput, orderBy: PlantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlantConnection!
   ardusConnection(where: ArduWhereInput, orderBy: ArduOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArduConnection!
   sensorDatesesConnection(where: SensorDatesWhereInput, orderBy: SensorDatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SensorDatesConnection!
+  plantStatesConnection(where: PlantStateWhereInput, orderBy: PlantStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlantStateConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -825,6 +1162,11 @@ input SensorDatesCreateInput {
 input SensorDatesCreateManyWithoutPlantInput {
   create: [SensorDatesCreateWithoutPlantInput!]
   connect: [SensorDatesWhereUniqueInput!]
+}
+
+input SensorDatesCreateOneInput {
+  create: SensorDatesCreateInput
+  connect: SensorDatesWhereUniqueInput
 }
 
 input SensorDatesCreateWithoutPlantInput {
@@ -911,6 +1253,15 @@ input SensorDatesSubscriptionWhereInput {
   node: SensorDatesWhereInput
 }
 
+input SensorDatesUpdateDataInput {
+  timeStamp: DateTime
+  temperatureValue: Float
+  radiationValue: Float
+  humidityValue: Float
+  loudnessValue: Float
+  plant: PlantUpdateOneWithoutSensorDatesInput
+}
+
 input SensorDatesUpdateInput {
   timeStamp: DateTime
   temperatureValue: Float
@@ -929,6 +1280,14 @@ input SensorDatesUpdateManyWithoutPlantInput {
   upsert: [SensorDatesUpsertWithWhereUniqueWithoutPlantInput!]
 }
 
+input SensorDatesUpdateOneInput {
+  create: SensorDatesCreateInput
+  connect: SensorDatesWhereUniqueInput
+  delete: Boolean
+  update: SensorDatesUpdateDataInput
+  upsert: SensorDatesUpsertNestedInput
+}
+
 input SensorDatesUpdateWithoutPlantDataInput {
   timeStamp: DateTime
   temperatureValue: Float
@@ -940,6 +1299,11 @@ input SensorDatesUpdateWithoutPlantDataInput {
 input SensorDatesUpdateWithWhereUniqueWithoutPlantInput {
   where: SensorDatesWhereUniqueInput!
   data: SensorDatesUpdateWithoutPlantDataInput!
+}
+
+input SensorDatesUpsertNestedInput {
+  update: SensorDatesUpdateDataInput!
+  create: SensorDatesCreateInput!
 }
 
 input SensorDatesUpsertWithWhereUniqueWithoutPlantInput {
@@ -1119,6 +1483,7 @@ type Subscription {
   plant(where: PlantSubscriptionWhereInput): PlantSubscriptionPayload
   ardu(where: ArduSubscriptionWhereInput): ArduSubscriptionPayload
   sensorDates(where: SensorDatesSubscriptionWhereInput): SensorDatesSubscriptionPayload
+  plantState(where: PlantStateSubscriptionWhereInput): PlantStateSubscriptionPayload
 }
 
 type User implements Node {
