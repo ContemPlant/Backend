@@ -1,4 +1,4 @@
-const { addSensorDates } = require('../../resolvers/Mutation')
+const { addSensorDates } = require('../../resolvers/Mutation')({ utils: require('../../utils') })
 const lodash = require('lodash')
 
 const store = {

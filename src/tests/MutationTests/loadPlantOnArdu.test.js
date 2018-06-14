@@ -1,7 +1,9 @@
-const { loadPlantOnArdu } = require('../../resolvers/Mutation')
-const jwt = require('jsonwebtoken')
-const { getUserId, APP_SECRET } = require('../../utils')
 const lodash = require('lodash')
+const jwt = require('jsonwebtoken')
+const utils = require('../../utils')
+
+const { loadPlantOnArdu } = require('../../resolvers/Mutation')({ utils })
+const { APP_SECRET } = utils
 
 // *********** Begin mock stuff **************
 const store = {

@@ -1,7 +1,8 @@
-const { createPlant } = require('../../resolvers/Mutation')
+const utils = require('../../utils')
+const { createPlant } = require('../../resolvers/Mutation')({ utils })
 const jwt = require('jsonwebtoken')
-const { getUserId, APP_SECRET } = require('../../utils')
 
+const { APP_SECRET } = utils
 
 const store = []
 const db = {

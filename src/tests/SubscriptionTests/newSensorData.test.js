@@ -1,4 +1,5 @@
-const { newSensorDates } = require('../../resolvers/Subscription')
+const { newSensorDates } = require('../../resolvers/Subscription')({  utils: require('../../utils') })
+
 
 // Our DB mock
 const db = {

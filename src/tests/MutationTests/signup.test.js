@@ -1,6 +1,7 @@
-const { signup } = require('../../resolvers/Mutation')
-const { getUserId } = require('../../utils')
 const bcrypt = require('bcryptjs')
+const utils = require('../../utils')
+const { signup } = require('../../resolvers/Mutation')({ utils })
+const { getUserId } = utils
 
 const store = []
 const db = {
