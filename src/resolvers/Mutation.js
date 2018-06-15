@@ -144,8 +144,8 @@ async function addSensorDates(parent, args, context, info) {
 
     // Pack into arrays
     const values = [temperatureValue, humidityValue, radiationValue, loudnessValue],
-        weights = [temperature_weight, radiation_weight, humidity_weight, loudness_weight],
-        optimas = [temperature_opt, radiation_opt, humidity_opt, loudness_opt]
+        weights = [temperature_weight, humidity_weight, radiation_weight, loudness_weight],
+        optimas = [temperature_opt, humidity_opt, radiation_opt, loudness_opt]
 
     // Calculate new state
     const environment = plantState.environment(values, weights, optimas)
