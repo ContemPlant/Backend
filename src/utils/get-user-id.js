@@ -9,7 +9,16 @@ module.exports = ({ APP_SECRET }) =>
      * @returns userId
      */
     function getUserId(context) {
-        const Authorization = context.request.get('Authorization')
+        const Authorization = (() => {
+            if (context.request) {
+                //usual request
+                return context.request.get('Authorization')
+            }
+
+            // for subscriptions
+            return context.connection.context.Authorization
+        })()
+
         // Check if auth headers are set
         if (!Authorization) throw new Error('Not authenticated')
 

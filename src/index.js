@@ -4,7 +4,7 @@ const { Prisma } = require('prisma-binding')
 
 const utils = require('./utils')
 
-const Query = require('./resolvers/Query')
+const Query = require('./resolvers/Query')({ utils })
 const Mutation = require('./resolvers/Mutation')({ utils })
 const Subscription = require('./resolvers/Subscription')({ utils })
 const AuthPayload = require('./resolvers/AuthPayload')
