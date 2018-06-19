@@ -17,6 +17,14 @@ describe('Environment calculation', () => {
         const weights = [0.25, 0.25, 0.25, 0.25]
         expect(environment(values, weights, optimas, maxDeviations)).toBe(0)
     })
+
+    test('Some test', () => {
+        const optimas = [22, 260, 43, 72]
+        const values = [23.89, 260, 41.79, 73]
+        const weights = [1, 1, 1, 1]
+        const env = environment(values, weights, optimas)
+        //console.log(env)
+    })
 })
 
 describe('Health calculation', () => {

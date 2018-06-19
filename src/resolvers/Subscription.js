@@ -2,8 +2,18 @@
  * All subscription resolvers
  * @module Subscription
  */
-module.exports = ({ }) => {
+module.exports = ({ utils }) => {
 
+    // Destructure helpers form utils
+    const {
+        APP_SECRET,
+        getUserId,
+        plantState,
+        hasPlantEditPermissionInContext,
+        arduPlantIsLoadedToInContext,
+        loadedPlantOnArduWithID
+    } = utils
+    
     /**
      * Subscription on a table of sensorData<type>
      *
@@ -36,8 +46,21 @@ module.exports = ({ }) => {
         }, info)
     }
 
+
+    function newPlant(parent, args, context, info) {
+        const s = context.db.subscription.plant({
+            where: {
+                mutation_in: ['CREATED', 'UPDATED'],
+                node: { owner: { id: getUserId(context) } }
+            }
+        }, info)
+
+        return s
+    }
+
     return {
         arduChange: { subscribe: arduChange },
-        newSensorDates: { subscribe: newSensorDates }
+        newSensorDates: { subscribe: newSensorDates },
+        newPlant: { subscribe: newPlant }
     }
 }

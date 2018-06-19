@@ -12,5 +12,5 @@ module.exports = {
     APP_SECRET,
     getUserId,
     plantState,
-    databaseShorthands
+    ...databaseShorthands
 }
