@@ -126,9 +126,6 @@ module.exports = ({ utils }) => {
         if (!loadedPlant)
             throw new Error("No plant is loaded to the given ardu... Sorry!")
 
-        if (!(await hasPlantEditPermissionInContext(context, loadedPlant.id)))
-            throw new Error("Client does not have permission to unload plant")
-
         //unload the loaded plant
         return context.db.mutation.updateArdu({
             data: {
