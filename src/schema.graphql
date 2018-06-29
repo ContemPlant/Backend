@@ -1,4 +1,4 @@
-# import Plant, SensorDates, Ardu, ArduSubscriptionPayload, SensorDatesSubscriptionPayload from "./generated/prisma.graphql"
+# import Plant, SensorDates, Ardu, ArduSubscriptionPayload, SensorDatesSubscriptionPayload, PlantSubscriptionPayload from "./generated/prisma.graphql"
 
 type Query {
     info: String!
@@ -45,9 +45,12 @@ type Mutation {
     createPlant(input: createPlantInput!): Plant
     addSensorDates(input: addSensorDatesInput!): SensorDates!
     loadPlantOnArdu(arduId: String!, plantId: ID!): Ardu
+    unloadPlantFromArdu(arduId: String!): Ardu
+    unloadPlant(plantId: ID!): Ardu
 }
 
 type Subscription {
     arduChange: ArduSubscriptionPayload
     newSensorDates(plantId: ID!): SensorDatesSubscriptionPayload
+    newPlant: PlantSubscriptionPayload
 }

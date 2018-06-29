@@ -2,10 +2,12 @@ const fs = require('fs');
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 
-const Query = require('./resolvers/Query')
-const Mutation = require('./resolvers/Mutation')
+const utils = require('./utils')
+
+const Query = require('./resolvers/Query')({ utils })
+const Mutation = require('./resolvers/Mutation')({ utils })
+const Subscription = require('./resolvers/Subscription')({ utils })
 const AuthPayload = require('./resolvers/AuthPayload')
-const Subscription = require('./resolvers/Subscription')
 
 const resolvers = {
     Query,
@@ -18,7 +20,7 @@ const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
     resolvers,
     context: req => ({
-        ...req, 
+        ...req,
         db: new Prisma({
             typeDefs: 'src/generated/prisma.graphql',
             endpoint: 'http://localhost:4466/plantsdb/dev',
@@ -39,10 +41,10 @@ const options = {
     //     cert: fs.readFileSync("/root/certificate.pem"),
     //     key: fs.readFileSync("/root/key.pem")
     // }
-  }
+}
 
-  server.start(options, ({ port }) =>
-  console.log(
-    `Server started, listening on port ${port} for incoming requests.`,
-  ),
+server.start(options, ({ port }) =>
+    console.log(
+        `Server started, listening on port ${port} for incoming requests.`,
+    ),
 )

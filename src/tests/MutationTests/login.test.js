@@ -1,7 +1,9 @@
-const { login } = require('../../resolvers/Mutation')
-const { getUserId } = require('../../utils')
 const bcrypt = require('bcryptjs')
 const lodash = require('lodash')
+const utils = require('../../utils')
+const { login } = require('../../resolvers/Mutation')({ utils })
+const { getUserId } = utils
+
 
 // Our DB mock
 let store = []
@@ -26,7 +28,7 @@ test('Does not login non existing user', () => {
         .rejects.toThrow('No such user found')
 })
 
-test('Invalid password fails', async() => {
+test('Invalid password fails', async () => {
     // Create a User
     store.push({
         email: 'ab@c.de',

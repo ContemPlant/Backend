@@ -1,4 +1,4 @@
-const { arduChange } = require('../../resolvers/Subscription')
+const { arduChange } = require('../../resolvers/Subscription')({ utils: require('../../utils')})
 
 // Our DB mock
 const db = {
