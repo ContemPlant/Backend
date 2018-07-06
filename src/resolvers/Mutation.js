@@ -204,7 +204,7 @@ module.exports = ({ utils }) => {
         } = plant
 
         // Pack into arrays
-        const values = [temperatureValue, humidityValue, radiationValue, loudnessValue],
+        const values = [temperatureValue, radiationValue, humidityValue, loudnessValue],
             weights = [temperature_weight, radiation_weight, humidity_weight, loudness_weight],
             optimas = [temperature_opt, radiation_opt, humidity_opt, loudness_opt]
 
