@@ -40,7 +40,14 @@ Two enpoints are live on http://localhost:8000
 | ---------------- | --------------------------------------------------- |
 | `/graphql`       | GET/POST requests go here                           |
 | `/playground`    | Graphical interface for schema exploration          |
-| `/subscriptions` | Making subscriptions (also via websockets protcoll) |
+| `/subscriptions` | Making subscriptions (e.g. via websockets) |
 
+## Built With
+- [Prisma](https://github.com/prismagraphql/prisma)
+
+## License
+This project is licensed under the MIT License
+
+<!-- ## Acknowledgements -->
 <!-- #### Further documentation
 check out the repository and open `./doc/schema/index.html` in -->
