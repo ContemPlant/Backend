@@ -21,7 +21,6 @@
   "devDependencies": {
     "jest": "^22.4.3",
     "jest-cli": "^22.4.3",
-    "lodash": "^4.17.10",
-    "quokka": "0.0.7"
+    "lodash": "^4.17.10"
   }
 }
