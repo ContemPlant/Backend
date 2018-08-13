@@ -50,7 +50,7 @@ function health(oldHealth, currentEnvironment, factor = 0.5) {
  * @param {Float} threshold Threshold when to start increasing in size
  * @param {Float} factor 
  */
-function plantSize(oldSize, currentHealth, threshold = 0.5, factor = 0.2) {
+function plantSize(oldSize, currentHealth, threshold = 0.5, factor = 0.3) {
     return currentHealth > threshold
         ? oldSize + currentHealth * factor
         : oldSize

@@ -19,8 +19,8 @@ describe('Environment calculation', () => {
     })
 
     test('Some test', () => {
-        const optimas = [22, 260, 43, 72]
-        const values = [23.89, 260, 41.79, 73]
+        const optimas = [24, 266, 32, 300]
+        const values = [24.1, 279, 39.2, 288]
         const weights = [1, 1, 1, 1]
         const env = environment(values, weights, optimas)
         //console.log(env)
