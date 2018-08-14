@@ -1,9 +1,0 @@
-image: node:10-alpine
-cache:
-  paths:
-  - node_modules/
-
-tests:
-  script:
-   - npm install
-   - npm test
