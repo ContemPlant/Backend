@@ -1,5 +1,6 @@
-# Plants Database GraphQL API
 
+# Plants Database GraphQL API
+![Build status](https://travis-ci.com/ContemPlant/Backend.svg?branch=master)
 ## Usage
 
 #### Prequesites
